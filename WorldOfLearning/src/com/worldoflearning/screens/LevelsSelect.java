@@ -7,5 +7,10 @@ public class LevelsSelect extends AbstractScreen {
 	public LevelsSelect(WorldOfLearning game) {
 		super(game);
 	}
+	
+	@Override
+	public void show(){
+		super.show();
+	}
 
 }
