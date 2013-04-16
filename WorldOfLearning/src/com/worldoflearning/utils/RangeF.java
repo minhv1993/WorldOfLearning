@@ -6,7 +6,8 @@ public class RangeF
     implements
         Serializable
 {
-    private final float start, end;
+	private static final long serialVersionUID = 1L;
+	private final float start, end;
 
     public RangeF(
         float start,

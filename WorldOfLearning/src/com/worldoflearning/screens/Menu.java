@@ -24,7 +24,7 @@ public class Menu extends AbstractScreen {
         table.row();
 
         // register the button "start game"
-        TextButton startGameButton = new TextButton( "Level Select", getSkin() );
+        TextButton startGameButton = new TextButton( "Start", getSkin() );
         startGameButton.addListener( new DefaultActorListener() {
             @Override
             public void touchUp(
@@ -36,7 +36,7 @@ public class Menu extends AbstractScreen {
             {
                 super.touchUp( event, x, y, pointer, button );
                 game.getSoundManager().play( WorldOfLearningSound.CLICK );
-                game.setScreen( new LevelsSelect( game ) );
+                game.setScreen( new Worlds( game ) );
             }
         } );
         table.add( startGameButton ).size( 300, 60 ).uniform().spaceBottom( 10 );

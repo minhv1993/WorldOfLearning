@@ -6,7 +6,8 @@ public class Range
     implements
         Serializable
 {
-    private final int start, end;
+	private static final long serialVersionUID = 1L;
+	private final int start, end;
 
     public Range(
         int start,
