@@ -1,4 +1,4 @@
-package com.WorldOfLearning;
+package com.worldoflearning;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;

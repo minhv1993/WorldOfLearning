@@ -1,4 +1,4 @@
-package com.WorldOfLearning;
+package com.worldoflearning;
 
 import android.os.Bundle;
 

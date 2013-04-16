@@ -1,4 +1,4 @@
-package com.WorldOfLearning;
+package com.worldoflearning;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
