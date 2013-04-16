@@ -67,11 +67,6 @@ proguard/
 
 *.class
 
-# Package Files #
-*.jar
-*.war
-*.ear
-
 #################
 ## Visual Studio
 #################
