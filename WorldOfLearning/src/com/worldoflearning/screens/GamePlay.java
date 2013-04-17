@@ -94,7 +94,7 @@ public class GamePlay extends AbstractScreen {
         timeFont.draw(batch, String.valueOf(timer.getTimeRemainingInSeconds()), 10, 480 - 10);
         timeFont.scale(-3);
         
-        // dispplay score
+        // display score
         scoreFont.scale(2);
         scoreFont.draw(batch, String.valueOf(scores), 10, 480-60);
         scoreFont.scale(-2);

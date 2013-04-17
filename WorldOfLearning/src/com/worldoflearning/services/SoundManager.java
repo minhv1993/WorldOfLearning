@@ -22,7 +22,9 @@ public class SoundManager
      */
     public enum WorldOfLearningSound
     {
-        CLICK( "sound/click.wav" );
+    	CLICK ( "sound/menuselect2.wav" );
+    	//test how bubble sounds
+    	//CLICK( "sound/click.wav" );
 
         private final String fileName;
 

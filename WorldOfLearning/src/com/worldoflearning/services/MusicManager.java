@@ -20,7 +20,8 @@ public class MusicManager
      */
     public enum WorldOfLearningMusic
     {
-        MENU( "music/menu.ogg" ),
+        //MENU( "music/menu.ogg" ),
+        MENU ( "music/polriseup.ogg"),
         LEVEL( "music/level.ogg" );
 
         private String fileName;
