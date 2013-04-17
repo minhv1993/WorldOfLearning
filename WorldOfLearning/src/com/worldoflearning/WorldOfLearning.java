@@ -25,9 +25,10 @@ public class WorldOfLearning extends Game {
     
     // background options
     public final String SPLASH_SCREEN = "splash-screen/splash-screen";
-    public final String MENU_SCREEN = "menu-screen/menu-image";
+    public final String MENU_SCREEN = "menu-screen/menu-screen";
     public final String LEVEL_SCREEN = "level-screen/level-screen";
-    public final String WORLD_SCREEEN = "world-screen/";
+    public final String WORLD_SCREEEN = "world-screen/world-screen";
+	public final String GAME_SCREEN = "game-screen.png";
     
     // a libgdx helper class that logs the current FPS each second
     private FPSLogger fpsLogger;

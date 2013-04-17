@@ -24,7 +24,7 @@ public class Menu extends AbstractScreen {
 	public void show(){
 		super.show();
         // retrieve the splash image's region from the atlas
-        AtlasRegion splashRegion = getAtlas().findRegion(game.SPLASH_SCREEN);
+        AtlasRegion splashRegion = getAtlas().findRegion(game.MENU_SCREEN);
         Drawable splashDrawable = new TextureRegionDrawable( splashRegion );
 
         // here we create the splash image actor; its size is set when the
@@ -37,7 +37,9 @@ public class Menu extends AbstractScreen {
 
         // retrieve the default table actor
         Table table = super.getTable();
-        table.add( "Worlds Of Learning" ).spaceBottom( 50 );
+        table.columnDefaults(0).padRight(10);
+        table.columnDefaults(2).padLeft(10);
+        table.add( " " ).spaceBottom( 300 ).colspan(3);
         table.row();
 
         // register the button "start game"
@@ -56,8 +58,7 @@ public class Menu extends AbstractScreen {
                 game.setScreen( new Worlds( game ) );
             }
         } );
-        table.add( startGameButton ).size( 300, 60 ).uniform().spaceBottom( 10 );
-        table.row();
+        table.add( startGameButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).padRight(10);
 
         // register the button "options"
         TextButton optionsButton = new TextButton( "Options", getSkin() );
@@ -75,8 +76,7 @@ public class Menu extends AbstractScreen {
                 game.setScreen( new Options( game ) );
             }
         } );
-        table.add( optionsButton ).uniform().fill().spaceBottom( 10 );
-        table.row();
+        table.add( optionsButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).padRight(10);
 
         // register the button "high scores"
         TextButton highScoresButton = new TextButton( "High Scores", getSkin() );
@@ -94,6 +94,6 @@ public class Menu extends AbstractScreen {
                 game.setScreen( new HighScores( game ) );
             }
         } );
-        table.add( highScoresButton ).uniform().fill();
+        table.add( highScoresButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).padRight(10);
 	}
 }

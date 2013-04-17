@@ -56,7 +56,7 @@ public class Levels extends AbstractScreen {
         table.defaults().spaceBottom(20);
         table.columnDefaults(0).padRight(20);
         table.columnDefaults(1).padLeft(20);
-        table.add("World "+(targetWorldId+1)).colspan(2);
+        table.add("World "+(targetWorldId+1)).colspan(2).spaceBottom(100);
         
         table.row();
         

@@ -33,7 +33,7 @@ public class Worlds extends AbstractScreen {
 	public void show(){
 		super.show();
 		// retrieve the splash image's region from the atlas
-        AtlasRegion splashRegion = getAtlas().findRegion(game.SPLASH_SCREEN);
+        AtlasRegion splashRegion = getAtlas().findRegion(game.WORLD_SCREEEN);
         Drawable splashDrawable = new TextureRegionDrawable( splashRegion );
 
         // here we create the splash image actor; its size is set when the
@@ -49,19 +49,19 @@ public class Worlds extends AbstractScreen {
 		
         // retrieve the default table actor
         Table table = super.getTable();
-        table.add( "Worlds Select" ).spaceBottom( 50 );
+        table.add(" ").spaceBottom(100);
         table.row();
 
         // register the button "World 1"
         world1Button = new TextButton( "World 1", getSkin() );
         world1Button.addListener( worldSelectListener);
-        table.add( world1Button ).size( 300, 60 ).uniform().spaceBottom( 10 );
+        table.add( world1Button ).fillX().size( 300, 60 ).padRight(400).spaceBottom(20);
         table.row();
 
         // register the button "World 2"
         world2Button = new TextButton( "World 2", getSkin() );
         world2Button.addListener(worldSelectListener);
-        table.add( world2Button ).uniform().fill().spaceBottom( 10 );
+        table.add( world2Button ).fillX().size( 300, 60 ).padRight(400).spaceBottom(20);
         table.row();
 
         // register the button "Main Menu"
@@ -80,7 +80,7 @@ public class Worlds extends AbstractScreen {
                 game.setScreen( new Menu( game ) );
             }
         } );
-        table.add( mainMenuButton ).uniform().fill();
+        table.add( mainMenuButton ).fillX().size( 300, 60 ).padRight(400);
 	}
 	
 	private class WorldSelectListener extends DefaultActorListener
