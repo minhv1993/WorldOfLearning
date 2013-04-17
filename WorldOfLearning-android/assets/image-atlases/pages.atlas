@@ -120,6 +120,30 @@ splash-screen/splash-image
   orig: 512, 301
   offset: 0, 0
   index: -1
+  
+splash-screen.gif
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+splash-screen/splash-screen
+  rotate: false
+  xy: 1, 1
+  size: 512, 301
+  orig: 512, 301
+  offset: 0, 0
+  index: -1
+
+level-screen.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+level-screen/level-screen
+  rotate: false
+  xy: 1, 1
+  size: 512, 301
+  orig: 512, 301
+  offset: 0, 0
+  index: -1
 
 pages3.png
 format: RGBA8888

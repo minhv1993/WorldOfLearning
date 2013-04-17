@@ -37,7 +37,7 @@ public class Levels extends AbstractScreen {
 	public void show(){
 		super.show();
         // Retrieve the splash image's region from the atlas
-        AtlasRegion splashRegion = getAtlas().findRegion( "splash-screen/splash-image" );
+        AtlasRegion splashRegion = getAtlas().findRegion(game.LEVEL_SCREEN);
         Drawable splashDrawable = new TextureRegionDrawable( splashRegion );
 
         // here we create the splash image actor; its size is set when the
@@ -62,21 +62,21 @@ public class Levels extends AbstractScreen {
         
         level1Button = new TextButton("Level 1", getSkin());
         level1Button.addListener(levelSelectListener);
-        table.add(level1Button).fillX().padRight(10);
+        table.add(level1Button).fillX().size( 300, 60 ).padRight(10);
         
         level2Button = new TextButton("Level 2", getSkin());
         level2Button.addListener(levelSelectListener);
-        table.add(level2Button).fillX().padRight(10);
+        table.add(level2Button).fillX().size( 300, 60 ).padRight(10);
         
         table.row();
         
         level3Button = new TextButton("Level 3", getSkin());
         level3Button.addListener(levelSelectListener);
-        table.add(level3Button).fillX().padRight(10);
+        table.add(level3Button).fillX().size( 300, 60 ).padRight(10);
         
         level4Button = new TextButton("Level 4", getSkin());
         level4Button.addListener(levelSelectListener);
-        table.add(level4Button).fillX().padRight(10);
+        table.add(level4Button).fillX().size( 300, 60 ).padRight(10);
         
         
 	}
