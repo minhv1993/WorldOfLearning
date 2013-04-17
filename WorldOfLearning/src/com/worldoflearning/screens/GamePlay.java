@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.worldoflearning.WorldOfLearning;
@@ -15,6 +16,8 @@ import com.worldoflearning.domain.GameTimer;
 import com.worldoflearning.domain.Level;
 import com.worldoflearning.domain.Profile;
 import com.worldoflearning.services.MusicManager.WorldOfLearningMusic;
+import com.worldoflearning.services.SoundManager.WorldOfLearningSound;
+import com.worldoflearning.utils.DefaultActorListener;
 
 public class GamePlay extends AbstractScreen {
 	private int targetWorldId;
@@ -39,11 +42,23 @@ public class GamePlay extends AbstractScreen {
 	
 	private ArrayList<String> tempList;
 
+	
+	
+	//use this boolean value to determine if the button pushed is correct. 
+	//If it is, play the the correct sound and increment the counter.
+	private boolean isCorrect;
+	
+	
+	
 	public GamePlay(WorldOfLearning game, int targetWorldId, int targetLevelId) {
 		super(game);
 		//back key shouldn't exit app
         //Gdx.input.setCatchBackKey(true);
         
+		
+		//temporary setting - DO NOT LEAVE THIS HERE!
+		isCorrect = false;
+		
 		background = new Texture(Gdx.files.internal(game.GAME_SCREEN));
 		
 		profile = game.getProfileManager().retrieveProfile();
@@ -103,14 +118,73 @@ public class GamePlay extends AbstractScreen {
 						table.add( "Score" ).fillX();
 						table.add( Integer.toString(scores)).fillX();
 					} else {
-						TextButton temp = new TextButton( "Pause", getSkin() );
-						table.add(temp).fillX();
-						TextButton temp2 = new TextButton( "Option", getSkin() );
-						table.add(temp2).fillX();
+						TextButton pauseButton = new TextButton( "Pause", getSkin() );
+						table.add(pauseButton).fillX();
+						
+						//Temporary listener for debugging purposes.  Send back to levels.
+						pauseButton.addListener( new DefaultActorListener() {
+				            @Override
+				            public void touchUp(
+				                InputEvent event,
+				                float x,
+				                float y,
+				                int pointer,
+				                int button )
+				            {
+				                super.touchUp( event, x, y, pointer, button );
+				                game.getSoundManager().play( WorldOfLearningSound.CLICK );
+				                game.setScreen( new Menu( game ) );
+				                 
+				            }
+				        } );
+						
+						TextButton optionButton = new TextButton( "Option", getSkin() );
+						table.add(optionButton).fillX();
+						optionButton.addListener( new DefaultActorListener() {
+				            @Override
+				            public void touchUp(
+				                InputEvent event,
+				                float x,
+				                float y,
+				                int pointer,
+				                int button )
+				            {
+				                super.touchUp( event, x, y, pointer, button );
+				                game.getSoundManager().play( WorldOfLearningSound.CLICK );
+				                
+				                //using option button as a switch for click sounds temporarily.
+				                if (isCorrect) {
+				                	isCorrect = false;
+				                }
+				                else isCorrect = true;
+				                 
+				            }
+				        } );
 					}
 				}else{
 					TextButton temp = new TextButton( tempList.get(rand.nextInt(tempList.size())).toString(), getSkin() );
 					table.add(temp).fillX().size(55, 55);
+					temp.addListener( new DefaultActorListener() {
+			            @Override
+			            public void touchUp(
+			                InputEvent event,
+			                float x,
+			                float y,
+			                int pointer,
+			                int button )
+			            {
+			                super.touchUp( event, x, y, pointer, button );
+			               
+			                //if correct button is push, play this sound:
+			                if(isCorrect) {
+			                	game.getSoundManager().play( WorldOfLearningSound.CORRECT );
+			                }
+			                else {
+			                game.getSoundManager().play( WorldOfLearningSound.WRONG );
+			                }
+			                 
+			            }
+			        } );
 				}
 			}
 		}

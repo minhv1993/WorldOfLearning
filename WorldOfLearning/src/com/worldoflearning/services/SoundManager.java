@@ -22,6 +22,9 @@ public class SoundManager
      */
     public enum WorldOfLearningSound
     {
+    	
+    	WRONG ( "sound/gamesoundwrong.wav"),
+    	CORRECT ("sound/gamesoundcorrect.wav"),   	
     	CLICK ( "sound/menuselect2.wav" );
     	//test how bubble sounds
     	//CLICK( "sound/click.wav" );
