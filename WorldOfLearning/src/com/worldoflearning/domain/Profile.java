@@ -23,6 +23,7 @@ public class Profile
     implements
         Serializable
 {
+	private int currentWorldId;
     private int currentLevelId;
     private int credits;
     private Map<Integer,Integer> highScores;
@@ -44,6 +45,13 @@ public class Profile
     public int getCurrentLevelId()
     {
         return currentLevelId;
+    }
+    
+    /**
+     * Retrieves the ID of the next playable world
+     */
+    public int getCurrentWorldId(){
+    	return currentWorldId;
     }
 
     /**
@@ -146,6 +154,7 @@ public class Profile
         OrderedMap<String,Object> jsonData )
     {
         // read the some basic properties
+    	currentWorldId = json.readValue("currentWorldId", Integer.class, jsonData);
         currentLevelId = json.readValue( "currentLevelId", Integer.class, jsonData );
         credits = json.readValue( "credits", Integer.class, jsonData );
 
@@ -167,6 +176,7 @@ public class Profile
     public void write(
         Json json )
     {
+    	json.writeValue( "currentWorldId", currentWorldId );
         json.writeValue( "currentLevelId", currentLevelId );
         json.writeValue( "credits", credits );
         json.writeValue( "highScores", highScores );

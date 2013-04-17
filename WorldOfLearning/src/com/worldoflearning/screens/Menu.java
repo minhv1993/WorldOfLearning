@@ -23,7 +23,6 @@ public class Menu extends AbstractScreen {
 	@Override
 	public void show(){
 		super.show();
-        
         // retrieve the splash image's region from the atlas
         AtlasRegion splashRegion = getAtlas().findRegion(game.SPLASH_SCREEN);
         Drawable splashDrawable = new TextureRegionDrawable( splashRegion );
