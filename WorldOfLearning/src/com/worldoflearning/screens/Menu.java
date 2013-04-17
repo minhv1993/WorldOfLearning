@@ -1,15 +1,21 @@
 package com.worldoflearning.screens;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Scaling;
 import com.worldoflearning.WorldOfLearning;
 import com.worldoflearning.services.SoundManager.WorldOfLearningSound;
 import com.worldoflearning.utils.DefaultActorListener;
 
 
 public class Menu extends AbstractScreen {
-
+	private Image background;
+	
 	public Menu(WorldOfLearning game) {
 		super(game);
 	}
@@ -17,10 +23,22 @@ public class Menu extends AbstractScreen {
 	@Override
 	public void show(){
 		super.show();
+        
+        // retrieve the splash image's region from the atlas
+        AtlasRegion splashRegion = getAtlas().findRegion(game.SPLASH_SCREEN);
+        Drawable splashDrawable = new TextureRegionDrawable( splashRegion );
+
+        // here we create the splash image actor; its size is set when the
+        // resize() method gets called
+        background = new Image( splashDrawable, Scaling.stretch );
+        background.setFillParent( true );
+
+        // and finally we add the actor to the stage
+        stage.addActor( background );
 
         // retrieve the default table actor
         Table table = super.getTable();
-        table.add( "Welcome to World Of Learning" ).spaceBottom( 50 );
+        table.add( "Worlds Of Learning" ).spaceBottom( 50 );
         table.row();
 
         // register the button "start game"

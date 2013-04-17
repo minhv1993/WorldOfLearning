@@ -18,6 +18,12 @@ public class WorldOfLearning extends Game {
     // whether we are in development mode
     public static final boolean DEV_MODE = false;
     
+    // background options
+    public final String SPLASH_SCREEN = "splash-screen/splash-image";
+    public final String MENU_SCREEN = "menu-screen/menu-image";
+    public final String LEVEL_SCREEN = "level-screen/";
+    public final String WORLD_SCREEEN = "world-screen/";
+    
     // a libgdx helper class that logs the current FPS each second
     private FPSLogger fpsLogger;
     
