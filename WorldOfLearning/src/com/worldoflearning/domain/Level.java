@@ -10,9 +10,7 @@ public class Level
     private boolean completed;
     private Level nextLevel;
 
-    public Level(
-        int id )
-    {
+    public Level( int id ){
         this.id = id;
     }
 

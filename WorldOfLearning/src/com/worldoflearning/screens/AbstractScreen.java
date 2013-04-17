@@ -123,12 +123,10 @@ public abstract class AbstractScreen
         float delta )
     {
         // (1) process the game logic
-
         // update the actors
         stage.act( delta );
 
         // (2) draw the result
-
         // clear the screen with the given RGB color (black)
         Gdx.gl.glClearColor( 0f, 0f, 0f, 1f );
         Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT );

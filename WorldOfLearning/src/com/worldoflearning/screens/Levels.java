@@ -78,7 +78,42 @@ public class Levels extends AbstractScreen {
         level4Button.addListener(levelSelectListener);
         table.add(level4Button).fillX().size( 300, 60 ).padRight(10);
         
+        table.row();
+        // register the button "Worlds Select"
+        TextButton worldSelectButton = new TextButton( "Worlds Select", getSkin() );
+        worldSelectButton.addListener( new DefaultActorListener() {
+            @Override
+            public void touchUp(
+                InputEvent event,
+                float x,
+                float y,
+                int pointer,
+                int button )
+            {
+                super.touchUp( event, x, y, pointer, button );
+                game.getSoundManager().play( WorldOfLearningSound.CLICK );
+                game.setScreen( new Worlds( game ) );
+            }
+        } );
+        table.add( worldSelectButton ).fillX().size( 300, 60 ).padRight(10);
         
+        // register the button "Main Menu"
+        TextButton mainMenuButton = new TextButton( "Main Menu", getSkin() );
+        mainMenuButton.addListener( new DefaultActorListener() {
+            @Override
+            public void touchUp(
+                InputEvent event,
+                float x,
+                float y,
+                int pointer,
+                int button )
+            {
+                super.touchUp( event, x, y, pointer, button );
+                game.getSoundManager().play( WorldOfLearningSound.CLICK );
+                game.setScreen( new Menu( game ) );
+            }
+        } );
+        table.add( mainMenuButton ).fillX().size( 300, 60 ).padRight(10);
 	}
 	
 	private class LevelSelectListener extends DefaultActorListener{
@@ -105,7 +140,7 @@ public class Levels extends AbstractScreen {
 		    // check the current level ID
 		    if( profile.getCurrentLevelId() >= targetLevelId ) {
 		        Gdx.app.log( WorldOfLearning.LOG, "Starting level: " + targetLevelId );
-		        game.setScreen( new GamePlay( game, targetLevelId ) );
+		        game.setScreen( new GamePlay( game, targetWorldId, targetLevelId ) );
 		    } else {
 		        Gdx.app.log( WorldOfLearning.LOG, "Unable to start level: " + targetLevelId );
 		    }

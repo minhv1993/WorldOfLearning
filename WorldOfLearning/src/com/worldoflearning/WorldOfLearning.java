@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.FPSLogger;
+import com.worldoflearning.screens.Levels;
 import com.worldoflearning.screens.Splash;
 import com.worldoflearning.services.LevelManager;
 import com.worldoflearning.services.MusicManager;
@@ -103,7 +104,7 @@ public class WorldOfLearning extends Game {
         // this approach avoids calling the screen's resize method repeatedly
         if( getScreen() == null ) {
             if( DEV_MODE ) {
-                //setScreen( new LevelScreen( this, 0 ) );
+                setScreen( new Levels( this, 0 ) );
             } else {
                 setScreen( new Splash( this ) );
             }

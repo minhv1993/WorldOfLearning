@@ -64,9 +64,9 @@ public class Worlds extends AbstractScreen {
         table.add( world2Button ).uniform().fill().spaceBottom( 10 );
         table.row();
 
-        // register the button "high scores"
-        TextButton highScoresButton = new TextButton( "Main Menu", getSkin() );
-        highScoresButton.addListener( new DefaultActorListener() {
+        // register the button "Main Menu"
+        TextButton mainMenuButton = new TextButton( "Main Menu", getSkin() );
+        mainMenuButton.addListener( new DefaultActorListener() {
             @Override
             public void touchUp(
                 InputEvent event,
@@ -80,7 +80,7 @@ public class Worlds extends AbstractScreen {
                 game.setScreen( new Menu( game ) );
             }
         } );
-        table.add( highScoresButton ).uniform().fill();
+        table.add( mainMenuButton ).uniform().fill();
 	}
 	
 	private class WorldSelectListener extends DefaultActorListener

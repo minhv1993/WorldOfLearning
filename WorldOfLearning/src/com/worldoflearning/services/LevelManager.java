@@ -50,12 +50,12 @@ public class LevelManager
      * Retrieve the level with the given id, or <code>null</code> if no such
      * level exist.
      */
-    public Level findLevelById(
-        int id )
+    public Level findLevelById(int worldId, int levelId )
     {
-        if( id < 0 || id >= levels.size() ) {
-            return null;
-        }
-        return levels.get( id );
+    	if(worldId < 0)
+    		return null;
+    	if((worldId*4 + levelId) < 0 || (worldId*4 + levelId) >= levels.size())
+    		return null;
+        return levels.get(worldId*4 + levelId);
     }
 }
