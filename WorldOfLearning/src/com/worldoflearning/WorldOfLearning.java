@@ -13,6 +13,9 @@ import com.worldoflearning.services.SoundManager;
 
 public class WorldOfLearning extends Game {
     // constant useful for logging
+	
+	// Nick test committee
+	
     public static final String LOG = WorldOfLearning.class.getSimpleName();
 
     // whether we are in development mode
