@@ -230,6 +230,18 @@ level-screen/w-1-l-1/pentagon
   offset: 0, 0
   index: -1
 
+game-screen.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+game-screen/game-screen
+  rotate: false
+  xy: 1, 1
+  size: 512, 301
+  orig: 512, 301
+  offset: 0, 0
+  index: -1
+
 pages3.png
 format: RGBA8888
 filter: Nearest,Nearest

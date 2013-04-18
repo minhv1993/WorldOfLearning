@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Scaling;
 import com.worldoflearning.WorldOfLearning;
 import com.worldoflearning.domain.GameTimer;
 import com.worldoflearning.domain.Item;
@@ -20,6 +25,8 @@ import com.worldoflearning.services.SoundManager.WorldOfLearningSound;
 import com.worldoflearning.utils.DefaultActorListener;
 
 public class GamePlay extends AbstractScreen {
+	public static final int NUM_OF_TILES = 4;
+	
 	private int targetWorldId;
 	private int targetLevelId;
 	private int scores;
@@ -28,45 +35,32 @@ public class GamePlay extends AbstractScreen {
 	
 	private Profile profile;
 	private Level level;
-	private ArrayList<Item> levelItems;
-	private ArrayList<Item> playFieldItems;
+	public final ArrayList<Item> levelItems;
+	public final Item[] itemTiles;
 	
-	private ImageButton toMatch;
+	public ImageButton toMatch;
+	public ImageButton tile1;
+	public ImageButton tile2;
+	public ImageButton tile3;
+	public ImageButton tile4;
 	
-	private Texture background;
+	public TextButton optionButton;
+	
 	private GameTimer timer;
 	private GameTimer beginTimer;
-	private Random rand;
-	
-	//github.com/minhv1993/WorldOfLearning.git
-	//use this boolean value to determine if the button pushed is correct. 
-	//If it is, play the the correct sound and increment the counter.
-	private boolean isCorrect;
-	
-	
+	public Random rand;
 	
 	public GamePlay(WorldOfLearning game, int targetWorldId, int targetLevelId) {
 		super(game);
 		//back key shouldn't exit app
         //Gdx.input.setCatchBackKey(true);
-
 		rand = new Random();
-        
-		//temporary setting - DO NOT LEAVE THIS HERE!
-		isCorrect = false;
-		
-		background = new Texture(Gdx.files.internal(game.GAME_SCREEN));
 		
 		profile = game.getProfileManager().retrieveProfile();
 		level = game.getLevelManager().findLevelById(targetWorldId, targetLevelId);
+		
 		levelItems = level.getItems();
-		playFieldItems = new ArrayList<Item>(4);
-		for(int i = 0; i < 4; i++){
-			playFieldItems.add(levelItems.get(rand.nextInt(levelItems.size())));
-		}
-
-		toMatch = new ImageButton(new TextureRegionDrawable( getAtlas().findRegion(playFieldItems.get(rand.nextInt(playFieldItems.size())).getDirectory())));
-
+		itemTiles = new Item[NUM_OF_TILES];
 		timer = new GameTimer(10000);
 		beginTimer = new GameTimer(4000);
 		
@@ -78,6 +72,73 @@ public class GamePlay extends AbstractScreen {
 		//Gdx.input.setInputProcessor(inputProcessor);
 	}
 	
+	public void addTile1Listener(){
+		tile1.addListener(new DefaultActorListener(){
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+				boolean isCorrect = ((GamePlay) game.getScreen()).tile1.getName().equals(((GamePlay) game.getScreen()).toMatch.getName());
+				if(isCorrect){
+					game.getSoundManager().play(WorldOfLearningSound.CORRECT);
+					((GamePlay) game.getScreen()).show();
+				} else{
+					game.getSoundManager().play(WorldOfLearningSound.WRONG);
+				}
+			}
+		});
+	}
+	
+	public void addTile2Listener(){
+		tile2.addListener(new DefaultActorListener(){
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+				boolean isCorrect = ((GamePlay) game.getScreen()).tile2.getName().equals(((GamePlay) game.getScreen()).toMatch.getName());
+				if(isCorrect){
+					game.getSoundManager().play(WorldOfLearningSound.CORRECT);
+					((GamePlay) game.getScreen()).show();
+				} else{
+					((GamePlay) game.getScreen()).game.getSoundManager().play(WorldOfLearningSound.WRONG);
+				}
+			}
+		});
+	}
+	
+	public void addTile3Listener(){
+		tile3.addListener(new DefaultActorListener(){
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+				boolean isCorrect = ((GamePlay) game.getScreen()).tile3.getName().equals(((GamePlay) game.getScreen()).toMatch.getName());
+				if(isCorrect){
+					game.getSoundManager().play(WorldOfLearningSound.CORRECT);
+					((GamePlay) game.getScreen()).show();
+				} else{
+					game.getSoundManager().play(WorldOfLearningSound.WRONG);
+				}
+			}
+		});
+	}
+	
+	
+	public void addTile4Listener(){
+		tile4.addListener(new DefaultActorListener(){
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+				boolean isCorrect = ((GamePlay) game.getScreen()).tile4.getName().equals(((GamePlay) game.getScreen()).toMatch.getName());
+				if(isCorrect){
+					game.getSoundManager().play(WorldOfLearningSound.CORRECT);
+					((GamePlay) game.getScreen()).show();
+				} else{
+					game.getSoundManager().play(WorldOfLearningSound.WRONG);
+				}
+			}
+		});
+	}
+	
+	public void setUpTiles(){
+		for(int i = 0; i < 4; i++){
+			itemTiles[i] = levelItems.get(rand.nextInt(levelItems.size()));
+		}
+	}
+	
 	@Override
 	protected boolean isGameScreen(){
 		return true;
@@ -86,11 +147,23 @@ public class GamePlay extends AbstractScreen {
 	@Override
 	public void show(){
 		super.show();
-
+		stage.clear();
         // retrieve the splash image's region from the atlas
+        AtlasRegion splashRegion = getAtlas().findRegion(game.GAME_SCREEN);
+        Drawable splashDrawable = new TextureRegionDrawable( splashRegion );
+        Image background = new Image( splashDrawable, Scaling.stretch );
+        background.setFillParent( true );
 
+        // and finally we add the actor to the stage
+        stage.addActor( background );
         // play level music
 		game.getMusicManager().play(WorldOfLearningMusic.LEVEL);
+		
+		// initialize the toMatch tile
+		setUpTiles();
+		Item itemToMatch = itemTiles[rand.nextInt(itemTiles.length)];
+		toMatch = new ImageButton(new TextureRegionDrawable( getAtlas().findRegion(itemToMatch.getDirectory())));
+		toMatch.setName(itemToMatch.getName());
 		
 		Table table = super.getTable();
 		table.columnDefaults(0).padLeft(5);
@@ -107,7 +180,7 @@ public class GamePlay extends AbstractScreen {
 						table.add( Integer.toString(scores)).fillX();
 					} else if (y == 1){
 						table.add( toMatch ).fillX().size(100,100).colspan(2).padRight(20);
-					} else {
+					} else if (y == 2){
 						TextButton pauseButton = new TextButton( "Pause", getSkin() );
 						
 						//Temporary listener for debugging purposes.  Send back to levels.
@@ -123,12 +196,11 @@ public class GamePlay extends AbstractScreen {
 				                super.touchUp( event, x, y, pointer, button );
 				                game.getSoundManager().play( WorldOfLearningSound.CLICK );
 				                game.setScreen( new Menu( game ) );
-				                 
 				            }
 				        } );
 						
 						table.add(pauseButton).fillX();
-						TextButton optionButton = new TextButton( "Option", getSkin() );
+						optionButton = new TextButton( "Option", getSkin() );
 						optionButton.addListener( new DefaultActorListener() {
 				            @Override
 				            public void touchUp(
@@ -140,130 +212,45 @@ public class GamePlay extends AbstractScreen {
 				            {
 				                super.touchUp( event, x, y, pointer, button );
 				                game.getSoundManager().play( WorldOfLearningSound.CLICK );
-				                
-				                //using option button as a switch for click sounds temporarily.
-				                if (isCorrect) {
-				                	isCorrect = false;
-				                }
-				                else isCorrect = true;
-				                 
 				            }
 				        } );
-						table.add(optionButton).fillX();
+						table.add(optionButton).fillX().padRight(20);
 					}
 				}else if (x >1){
 					if(y > 0){
 						if(y == 1){
 							if(x == 2){
-								addImageButton(0, table);
-							}else{
-								addImageButton(1, table);
+								Item itemTile = itemTiles[0];
+								tile1 = new ImageButton(new TextureRegionDrawable(getAtlas().findRegion(itemTile.getDirectory())));
+								tile1.setName(itemTile.getName());
+								addTile1Listener();
+								table.add(tile1).fillX().size(100, 100).space(2);
+							}else if (x == 3){
+								Item itemTile = itemTiles[1];
+								tile2 = new ImageButton(new TextureRegionDrawable(getAtlas().findRegion(itemTile.getDirectory())));
+								tile2.setName(itemTile.getName());
+								addTile2Listener();
+								table.add(tile2).fillX().size(100, 100).space(2);
 							}
-						} else {
+						} else if (y == 2){
 							if(x == 2){
-								addImageButton(2, table);
-							}else{
-								addImageButton(3, table);
+								Item itemTile = itemTiles[2];
+								tile3 = new ImageButton(new TextureRegionDrawable(getAtlas().findRegion(itemTile.getDirectory())));
+								tile3.setName(itemTile.getName());
+								addTile3Listener();
+								table.add(tile3).fillX().size(100, 100).space(2);
+							}else if (x == 3){
+								Item itemTile = itemTiles[3];
+								tile4 = new ImageButton(new TextureRegionDrawable(getAtlas().findRegion(itemTile.getDirectory())));
+								tile4.setName(itemTile.getName());
+								addTile4Listener();
+								table.add(tile4).fillX().size(100, 100).space(2);
 							}
 						}
 					}
 				}
 			}
 		}
+		stage.addActor(table);
 	}
-	
-	public void addImageButton(int id, Table table){
-		ImageButton ib = new ImageButton(new TextureRegionDrawable(  getAtlas().findRegion(playFieldItems.get(id).getDirectory()) ));
-		ib.addListener( new DefaultActorListener() {
-            @Override
-            public void touchUp(
-                InputEvent event,
-                float x,
-                float y,
-                int pointer,
-                int button )
-            {
-                super.touchUp( event, x, y, pointer, button );
-               
-                //if correct button is push, play this sound:
-                if(isCorrect) {
-                	game.getSoundManager().play( WorldOfLearningSound.CORRECT );
-                }
-                else {
-                game.getSoundManager().play( WorldOfLearningSound.WRONG );
-                }
-                 
-            }
-        } );
-		table.add(ib).fillY().size(100, 100).space(2);
-	}
-	
-	/*@Override
-	public void render(float delta){
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        if(beginTimer.getTimeRemaining() <= 0){
-        	checkTimeLeft();
-	        
-	        cam.update();
-	        batch.setProjectionMatrix(cam.combined);
-	        batch.begin();
-	        
-	        addTextLayout();
-	        
-	        // Add game logic here
-	        
-	        batch.end();
-        } else {
-        	cam.update();
-	        batch.setProjectionMatrix(cam.combined);
-	        batch.begin();
-	        
-	        addTextLayoutBeforeStart();
-	        
-	        batch.end();
-        }
-	}
-	
-	public void addTextLayoutBeforeStart(){
-        //draw background
-        //batch.draw(background, 0, 0);
-        
-        // display timer
-        timeFont.scale(3);
-        timeFont.draw(batch, String.valueOf(60), 10, 480 - 10);
-        timeFont.scale(-3);
-        
-        // dispplay score
-        scoreFont.scale(2);
-        scoreFont.draw(batch, String.valueOf(0), 10, 480-60);
-        scoreFont.scale(-2);
-        
-        countdownFont.scale(4);
-        countdownFont.draw(batch, String.valueOf(beginTimer.getTimeRemainingInSeconds()), 390, 480-200);
-        countdownFont.scale(-4);
-	}
-	
-	public void addTextLayout(){
-		//draw background
-        //batch.draw(background, 0, 0);
-        
-        // display timer
-        timeFont.scale(3);
-        timeFont.draw(batch, String.valueOf(timer.getTimeRemainingInSeconds()), 10, 480 - 10);
-        timeFont.scale(-3);
-        
-        // dispplay score
-        scoreFont.scale(2);
-        scoreFont.draw(batch, String.valueOf(scores), 10, 480-60);
-        scoreFont.scale(-2);
-	}
-	
-	public void checkTimeLeft(){
-		if(timer.getTimeRemaining() <=0){
-        	// save score
-        	// update high score
-        	// return to previous screen/ game over screen
-        	game.setScreen(new Levels(game, targetWorldId));
-        }
-	}*/
 }
