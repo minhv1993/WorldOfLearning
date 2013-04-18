@@ -3,7 +3,6 @@ package com.worldoflearning;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.FPSLogger;
 import com.worldoflearning.screens.GamePlay;
 import com.worldoflearning.screens.Splash;
 import com.worldoflearning.services.LevelManager;
@@ -11,6 +10,7 @@ import com.worldoflearning.services.MusicManager;
 import com.worldoflearning.services.PreferencesManager;
 import com.worldoflearning.services.ProfileManager;
 import com.worldoflearning.services.SoundManager;
+import com.worldoflearning.utils.GameLogger;
 
 public class WorldOfLearning extends Game {
     // constant useful for logging
@@ -21,7 +21,7 @@ public class WorldOfLearning extends Game {
     public static final String LOG = WorldOfLearning.class.getSimpleName();
 
     // whether we are in development mode
-    public static final boolean DEV_MODE = true;
+    public static final boolean DEV_MODE = false;
     
     // background options
     public final String SPLASH_SCREEN = "splash-screen/splash-screen";
@@ -31,7 +31,7 @@ public class WorldOfLearning extends Game {
 	public final String GAME_SCREEN = "game-screen/game-screen";
     
     // a libgdx helper class that logs the current FPS each second
-    private FPSLogger fpsLogger;
+    private GameLogger gameLogger;
     
     // services
     private PreferencesManager preferencesManager;
@@ -90,7 +90,7 @@ public class WorldOfLearning extends Game {
         levelManager = new LevelManager();
 
         // create the helper objects
-        fpsLogger = new FPSLogger();
+        gameLogger = new GameLogger();
 	}
 	
 	@Override
@@ -116,7 +116,8 @@ public class WorldOfLearning extends Game {
     public void render()
     {
         super.render();
-        if( DEV_MODE ) fpsLogger.log();
+        if( DEV_MODE ) gameLogger.log();
+        else gameLogger.log(this);
     }
 
     @Override

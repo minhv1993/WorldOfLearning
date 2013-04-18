@@ -3,6 +3,8 @@ package com.worldoflearning.screens;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -12,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.Timer;
 import com.worldoflearning.WorldOfLearning;
 import com.worldoflearning.domain.GameTimer;
 import com.worldoflearning.domain.Item;
@@ -24,14 +25,11 @@ import com.worldoflearning.utils.DefaultActorListener;
 
 public class GamePlay extends AbstractScreen {
 	public static final int NUM_OF_TILES = 4;
+	public static final int TIME_IN_MILLIS = 31000;
 	
 	private int targetWorldId;
 	private int targetLevelId;
 	public int scores;
-	
-	private boolean paused;
-	public boolean isUpdated;
-	private Long lastTimeInMillis;
 	
 	private Profile profile;
 	private Level level;
@@ -44,18 +42,16 @@ public class GamePlay extends AbstractScreen {
 	public ImageButton tile3;
 	public ImageButton tile4;
 	
-	private GameTimer timer;
-	private GameTimer beginTimer;
-	public Random rand;
+	BitmapFont countDown;
 	
-	private Timer libTimer;
+	private GameTimer timer;
+	public Random rand;
 	
 	public GamePlay(WorldOfLearning game, int targetWorldId, int targetLevelId) {
 		super(game);
 		//back key shouldn't exit app
         //Gdx.input.setCatchBackKey(true);
 		rand = new Random();
-		libTimer = new Timer();
 		
 		profile = game.getProfileManager().retrieveProfile();
 		level = game.getLevelManager().findLevelById(targetWorldId, targetLevelId);
@@ -87,10 +83,10 @@ public class GamePlay extends AbstractScreen {
 		addTile4Listener();
 
 		scores = 0;
-		timer = new GameTimer(5000);
-		beginTimer = new GameTimer(4000);
-		isUpdated = true;
-		lastTimeInMillis = System.currentTimeMillis();
+		timer = new GameTimer(TIME_IN_MILLIS);
+		
+		countDown = getFont();
+		
 		// set up game input processor to catch back button
 		//Gdx.input.setCatchBackKey(true);
 		//GameInputProcessor  inputProcessor = new GameInputProcessor(game, targetWorldId);
@@ -220,7 +216,6 @@ public class GamePlay extends AbstractScreen {
 
 		Table table = super.getTable();
 		table.clear();
-		
 		if(timer.getTimeRemainingInSeconds() > 0){
 			table.columnDefaults(0).padLeft(5);
 			table.columnDefaults(6).padRight(5);
@@ -231,14 +226,17 @@ public class GamePlay extends AbstractScreen {
 					if(x == 0){
 						if(y == 0){
 							table.add( Integer.toString(timer.getTimeRemainingInSeconds())).fillX().colspan(2);
-							table.add( Integer.toString(scores)).fillX().colspan(2);
+							table.add( Integer.toString(scores)).fillX().colspan(2).right();
 						} else if (y == 1){
-							Table smallTable = new Table(getSkin());
-							smallTable.add(toMatch).fillX().size(70,70);
-							smallTable.row();
-							smallTable.add(toMatch.getName());
-							table.add( smallTable ).fillX().size(100,100).colspan(2).padRight(20);
+							table.add(toMatch).fillX().size(100,100).colspan(2).padRight(20);
 						} else if (y == 2){
+							Table smallTable = new Table(getSkin());
+							smallTable.columnDefaults(0).padRight(5);
+							smallTable.columnDefaults(1).padRight(5);
+							smallTable.row();
+							
+							smallTable.add(toMatch.getName()).fillX().colspan(2).center().padBottom(30).padLeft(35);
+							smallTable.row();
 							TextButton pauseButton = new TextButton( "Pause", getSkin() );
 							pauseButton.addListener( new DefaultActorListener() {
 					            @Override
@@ -249,8 +247,8 @@ public class GamePlay extends AbstractScreen {
 					            }
 					        } );
 							
-							table.add(pauseButton).fillX();
-							TextButton optionButton = new TextButton( "Option", getSkin() );
+							smallTable.add(pauseButton).fillX();
+							TextButton optionButton = new TextButton( "Option", getSkin());
 							optionButton.addListener( new DefaultActorListener() {
 					            @Override
 					            public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
@@ -258,7 +256,8 @@ public class GamePlay extends AbstractScreen {
 					                game.getSoundManager().play( WorldOfLearningSound.CLICK );
 					            }
 					        } );
-							table.add(optionButton).fillX().padRight(20);
+							smallTable.add(optionButton).fillX();
+							table.add(smallTable).fillX().colspan(2).padRight(20);
 						}
 					}else if (x >1){
 						if(y > 0){

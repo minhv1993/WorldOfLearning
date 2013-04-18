@@ -1,10 +1,7 @@
 package com.worldoflearning.screens;
 
-import java.awt.Font;
 import java.util.ArrayList;
-import java.util.Random;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
+
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
