@@ -21,6 +21,7 @@ public class MusicManager
     public enum WorldOfLearningMusic
     {
         //MENU( "music/menu.ogg" ),
+    	TUTORIAL ("music/tutorialmusic.ogg"),
         MENU ( "music/polriseup.ogg"),
         LEVEL( "music/level.ogg" );
 

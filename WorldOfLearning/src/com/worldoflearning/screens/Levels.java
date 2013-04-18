@@ -140,7 +140,8 @@ public class Levels extends AbstractScreen {
 		    // check the current level ID
 		    if( profile.getCurrentLevelId() >= targetLevelId ) {
 		        Gdx.app.log( WorldOfLearning.LOG, "Starting level: " + targetLevelId );
-		        game.setScreen( new GamePlay( game, targetWorldId, targetLevelId ) );
+		        //game.setScreen( new GamePlay( game, targetWorldId, targetLevelId ) );
+		        game.setScreen( new Tutorial( game, targetWorldId, targetLevelId ) );
 		    } else {
 		        Gdx.app.log( WorldOfLearning.LOG, "Unable to start level: " + targetLevelId );
 		    }
