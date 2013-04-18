@@ -47,6 +47,9 @@ public class GamePlay extends AbstractScreen {
 	private GameTimer timer;
 	public Random rand;
 	
+	private boolean isPaused;
+	
+	
 	public GamePlay(WorldOfLearning game, int targetWorldId, int targetLevelId) {
 		super(game);
 		//back key shouldn't exit app
@@ -59,6 +62,8 @@ public class GamePlay extends AbstractScreen {
 		levelItems = level.getItems();
 		itemTiles = new Item[NUM_OF_TILES];
 		
+		
+		isPaused = false;
 		// initialize the toMatch tile
 		setUpTiles();
 		Item itemToMatch = itemTiles[rand.nextInt(itemTiles.length)];
@@ -98,12 +103,15 @@ public class GamePlay extends AbstractScreen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
 				boolean isCorrect = ((GamePlay) game.getScreen()).tile1.getName().equals(((GamePlay) game.getScreen()).toMatch.getName());
-				if(isCorrect){
-					game.getSoundManager().play(WorldOfLearningSound.CORRECT);
-					((GamePlay) game.getScreen()).updateTiles(10);
-				} else{
-					game.getSoundManager().play(WorldOfLearningSound.WRONG);
-					((GamePlay) game.getScreen()).updateTiles(-5);
+				if (!isPaused) {
+					if (isCorrect) {
+						game.getSoundManager().play(
+								WorldOfLearningSound.CORRECT);
+						((GamePlay) game.getScreen()).updateTiles(10);
+					} else {
+						game.getSoundManager().play(WorldOfLearningSound.WRONG);
+						((GamePlay) game.getScreen()).updateTiles(-5);
+					}
 				}
 			}
 		});
@@ -114,12 +122,15 @@ public class GamePlay extends AbstractScreen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
 				boolean isCorrect = ((GamePlay) game.getScreen()).tile2.getName().equals(((GamePlay) game.getScreen()).toMatch.getName());
-				if(isCorrect){
-					game.getSoundManager().play(WorldOfLearningSound.CORRECT);
-					((GamePlay) game.getScreen()).updateTiles(10);
-				} else{
-					((GamePlay) game.getScreen()).game.getSoundManager().play(WorldOfLearningSound.WRONG);
-					((GamePlay) game.getScreen()).updateTiles(-5);
+				if (!isPaused) {
+					if (isCorrect) {
+						game.getSoundManager().play(
+								WorldOfLearningSound.CORRECT);
+						((GamePlay) game.getScreen()).updateTiles(10);
+					} else {
+						game.getSoundManager().play(WorldOfLearningSound.WRONG);
+						((GamePlay) game.getScreen()).updateTiles(-5);
+					}
 				}
 			}
 		});
@@ -130,12 +141,15 @@ public class GamePlay extends AbstractScreen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
 				boolean isCorrect = ((GamePlay) game.getScreen()).tile3.getName().equals(((GamePlay) game.getScreen()).toMatch.getName());
-				if(isCorrect){
-					game.getSoundManager().play(WorldOfLearningSound.CORRECT);
-					((GamePlay) game.getScreen()).updateTiles(10);
-				} else{
-					game.getSoundManager().play(WorldOfLearningSound.WRONG);
-					((GamePlay) game.getScreen()).updateTiles(-5);
+				if (!isPaused) {
+					if (isCorrect) {
+						game.getSoundManager().play(
+								WorldOfLearningSound.CORRECT);
+						((GamePlay) game.getScreen()).updateTiles(10);
+					} else {
+						game.getSoundManager().play(WorldOfLearningSound.WRONG);
+						((GamePlay) game.getScreen()).updateTiles(-5);
+					}
 				}
 			}
 		});
@@ -147,12 +161,15 @@ public class GamePlay extends AbstractScreen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
 				boolean isCorrect = ((GamePlay) game.getScreen()).tile4.getName().equals(((GamePlay) game.getScreen()).toMatch.getName());
-				if(isCorrect){
-					game.getSoundManager().play(WorldOfLearningSound.CORRECT);
-					((GamePlay) game.getScreen()).updateTiles(10);
-				} else{
-					game.getSoundManager().play(WorldOfLearningSound.WRONG);
-					((GamePlay) game.getScreen()).updateTiles(-5);
+				if (!isPaused) {
+					if (isCorrect) {
+						game.getSoundManager().play(
+								WorldOfLearningSound.CORRECT);
+						((GamePlay) game.getScreen()).updateTiles(10);
+					} else {
+						game.getSoundManager().play(WorldOfLearningSound.WRONG);
+						((GamePlay) game.getScreen()).updateTiles(-5);
+					}
 				}
 			}
 		});
@@ -216,127 +233,144 @@ public class GamePlay extends AbstractScreen {
 
 		Table table = super.getTable();
 		table.clear();
-		if(timer.getTimeRemainingInSeconds() > 0){
-			table.columnDefaults(0).padLeft(5);
-			table.columnDefaults(6).padRight(5);
-			
-			for(int y = 0; y < 3; y++){
-				table.row();
-				for(int x = 0; x < 4; x++){
-					if(x == 0){
-						if(y == 0){
-							table.add( Integer.toString(timer.getTimeRemainingInSeconds())).fillX().colspan(2);
-							table.add( Integer.toString(scores)).fillX().colspan(2).right();
-						} else if (y == 1){
-							table.add(toMatch).fillX().size(100,100).colspan(2).padRight(20);
-						} else if (y == 2){
-							Table smallTable = new Table(getSkin());
-							smallTable.columnDefaults(0).padRight(5);
-							smallTable.columnDefaults(1).padRight(5);
-							smallTable.row();
-							
-							smallTable.add(toMatch.getName()).fillX().colspan(2).center().padBottom(30).padLeft(35);
-							smallTable.row();
-							TextButton pauseButton = new TextButton( "Pause", getSkin() );
-							pauseButton.addListener( new DefaultActorListener() {
-					            @Override
-					            public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
-					                super.touchUp( event, x, y, pointer, button );
-					                game.getSoundManager().play( WorldOfLearningSound.CLICK );
-					                game.setScreen( new Menu( game ) );
-					            }
-					        } );
-							
-							smallTable.add(pauseButton).fillX();
-							TextButton optionButton = new TextButton( "Option", getSkin());
-							optionButton.addListener( new DefaultActorListener() {
-					            @Override
-					            public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
-					                super.touchUp( event, x, y, pointer, button );
-					                game.getSoundManager().play( WorldOfLearningSound.CLICK );
-					            }
-					        } );
-							smallTable.add(optionButton).fillX();
-							table.add(smallTable).fillX().colspan(2).padRight(20);
-						}
-					}else if (x >1){
-						if(y > 0){
-							if(y == 1){
-								if(x == 2){
-									table.add(tile1).fillX().size(100, 100).space(2);
-								}else if (x == 3){
-									table.add(tile2).fillX().size(100, 100).space(2);
-								}
+		if(!isPaused) {
+			if(timer.getTimeRemainingInSeconds() > 0){
+				table.columnDefaults(0).padLeft(5);
+				table.columnDefaults(6).padRight(5);
+
+				for(int y = 0; y < 3; y++){
+					table.row();
+					for(int x = 0; x < 4; x++){
+						if(x == 0){
+							if(y == 0){
+
+								table.add( Integer.toString(timer.getTimeRemainingInSeconds())).fillX().colspan(2);
+								table.add( Integer.toString(scores)).fillX().colspan(2).right();
+							} else if (y == 1){
+								table.add(toMatch).fillX().size(100,100).colspan(2).padRight(20);
 							} else if (y == 2){
-								if(x == 2){
-									table.add(tile3).fillX().size(100, 100).space(2);
-								}else if (x == 3){
-									table.add(tile4).fillX().size(100, 100).space(2);
+								Table smallTable = new Table(getSkin());
+								smallTable.columnDefaults(0).padRight(5);
+								smallTable.columnDefaults(1).padRight(5);
+								smallTable.row();
+
+								smallTable.add(toMatch.getName()).fillX().colspan(2).center().padBottom(30).padLeft(35);
+								smallTable.row();
+								final TextButton pauseButton = new TextButton( "Pause" , getSkin() );
+								pauseButton.addListener( new DefaultActorListener() {
+									@Override
+									public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
+										super.touchUp( event, x, y, pointer, button );
+										game.getSoundManager().play( WorldOfLearningSound.CLICK );
+										//game.setScreen( new Menu( game ) );
+
+										/* Pause Timer
+										 * Set isPaused() state
+										 * take in the current system time
+										 * when paused is pushed again, give the time that has elapsed 
+										 * and add it to the finish timer.
+										 */
+										if (!isPaused) {
+											isPaused = true;
+										}
+										else {
+											isPaused = false;
+											pause();
+										}  
+									}
+								} );
+
+								smallTable.add(pauseButton).fillX();
+								TextButton optionButton = new TextButton( "Option", getSkin());
+								optionButton.addListener( new DefaultActorListener() {
+									@Override
+									public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
+										super.touchUp( event, x, y, pointer, button );
+										game.getSoundManager().play( WorldOfLearningSound.CLICK );
+									}
+								} );
+								smallTable.add(optionButton).fillX();
+								table.add(smallTable).fillX().colspan(2).padRight(20);
+							}
+						}else if (x >1){
+							if(y > 0){
+								if(y == 1){
+									if(x == 2){
+										table.add(tile1).fillX().size(100, 100).space(2);
+									}else if (x == 3){
+										table.add(tile2).fillX().size(100, 100).space(2);
+									}
+								} else if (y == 2){
+									if(x == 2){
+										table.add(tile3).fillX().size(100, 100).space(2);
+									}else if (x == 3){
+										table.add(tile4).fillX().size(100, 100).space(2);
+									}
 								}
 							}
 						}
 					}
 				}
-			}
-		}else{
-			table.columnDefaults(0).padRight(5);
-			table.columnDefaults(1).padLeft(5);
-			table.row();
-			
-			table.add("Level Completed").colspan(2).padBottom(10);
-			table.row();
-			
-			table.add("High Score:").fillX().left();
-			table.add("189299").fillX().right();
-			table.row();
-			
-			table.add("Your Score:").fillX().left();
-			table.add("12312").fillX().right();
-			table.row();
+			}else{
+				table.columnDefaults(0).padRight(5);
+				table.columnDefaults(1).padLeft(5);
+				table.row();
 
-			TextButton levelsButton = new TextButton( "Levels Select", getSkin() );
-			levelsButton.addListener(new DefaultActorListener(){
-				@Override
-	            public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
-	                super.touchUp( event, x, y, pointer, button );
-	                game.getSoundManager().play( WorldOfLearningSound.CLICK );
-	                game.setScreen(new Levels(game, targetWorldId));
-	        		int tempWorldId = (targetLevelId==3)?1:0;
-	        		int tempLevelId = (targetLevelId==3)?(targetWorldId==1)?3:0:targetLevelId+1;
-	        		Profile tempProfile = game.getProfileManager().retrieveProfile();
-	        		if(tempProfile.getCurrentWorldId() <= tempWorldId){
-	        			if(tempProfile.getCurrentLevelId() <= tempLevelId){
-	        				tempProfile.setCurrentWorldId(tempWorldId);
-	        				tempProfile.setCurrentLevelId(tempLevelId);
-	        				game.getProfileManager().setProfile(tempProfile);
-	        		        game.getProfileManager().persist();
-	        			}
-	        		}
-	            }
-			});
-			TextButton nextButton = new TextButton("Next Level", getSkin());
-			nextButton.addListener(new DefaultActorListener(){
-				@Override
-	            public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
-	                super.touchUp( event, x, y, pointer, button );
-	                game.getSoundManager().play( WorldOfLearningSound.CLICK );
-	                game.setScreen(new Tutorial(game, (targetLevelId==3)?1:targetWorldId, (targetLevelId==3)?(targetWorldId==1)?3:0:targetLevelId+1));
-	        		int tempWorldId = (targetLevelId==3 && targetWorldId==0)?1:0;
-	        		int tempLevelId = (targetLevelId==3)?(targetWorldId==1)?3:0:targetLevelId+1;
-	        		Profile tempProfile = game.getProfileManager().retrieveProfile();
-	        		if(tempProfile.getCurrentWorldId() <= tempWorldId){
-	        			if(tempProfile.getCurrentLevelId() <= tempLevelId){
-	        				tempProfile.setCurrentWorldId(tempWorldId);
-	        				tempProfile.setCurrentLevelId(tempLevelId);
-	        				game.getProfileManager().setProfile(tempProfile);
-	        		        game.getProfileManager().persist();
-	        			}
-	        		}
-				}
-			});
-			table.add(levelsButton).fillX().size(100, 20).padTop(5);
-			table.add(nextButton).fillX().size(100, 20).padTop(5);
-			table.row();
+				table.add("Level Completed").colspan(2).padBottom(10);
+				table.row();
+
+				table.add("High Score:").fillX().left();
+				table.add("189299").fillX().right();
+				table.row();
+
+				table.add("Your Score:").fillX().left();
+				table.add("12312").fillX().right();
+				table.row();
+
+				TextButton levelsButton = new TextButton( "Levels Select", getSkin() );
+				levelsButton.addListener(new DefaultActorListener(){
+					@Override
+					public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
+						super.touchUp( event, x, y, pointer, button );
+						game.getSoundManager().play( WorldOfLearningSound.CLICK );
+						game.setScreen(new Levels(game, targetWorldId));
+						int tempWorldId = (targetLevelId==3)?1:0;
+						int tempLevelId = (targetLevelId==3)?(targetWorldId==1)?3:0:targetLevelId+1;
+						Profile tempProfile = game.getProfileManager().retrieveProfile();
+						if(tempProfile.getCurrentWorldId() <= tempWorldId){
+							if(tempProfile.getCurrentLevelId() <= tempLevelId){
+								tempProfile.setCurrentWorldId(tempWorldId);
+								tempProfile.setCurrentLevelId(tempLevelId);
+								game.getProfileManager().setProfile(tempProfile);
+								game.getProfileManager().persist();
+							}
+						}
+					}
+				});
+				TextButton nextButton = new TextButton("Next Level", getSkin());
+				nextButton.addListener(new DefaultActorListener(){
+					@Override
+					public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
+						super.touchUp( event, x, y, pointer, button );
+						game.getSoundManager().play( WorldOfLearningSound.CLICK );
+						game.setScreen(new Tutorial(game, (targetLevelId==3)?1:targetWorldId, (targetLevelId==3)?(targetWorldId==1)?3:0:targetLevelId+1));
+						int tempWorldId = (targetLevelId==3 && targetWorldId==0)?1:0;
+						int tempLevelId = (targetLevelId==3)?(targetWorldId==1)?3:0:targetLevelId+1;
+						Profile tempProfile = game.getProfileManager().retrieveProfile();
+						if(tempProfile.getCurrentWorldId() <= tempWorldId){
+							if(tempProfile.getCurrentLevelId() <= tempLevelId){
+								tempProfile.setCurrentWorldId(tempWorldId);
+								tempProfile.setCurrentLevelId(tempLevelId);
+								game.getProfileManager().setProfile(tempProfile);
+								game.getProfileManager().persist();
+							}
+						}
+					}
+				});
+				table.add(levelsButton).fillX().size(100, 20).padTop(5);
+				table.add(nextButton).fillX().size(100, 20).padTop(5);
+				table.row();
+			}
 		}
 		stage.addActor(table);
 	}
