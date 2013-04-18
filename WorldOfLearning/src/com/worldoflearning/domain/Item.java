@@ -1,28 +1,38 @@
 package com.worldoflearning.domain;
 
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+
 /**
  * An item that can be added to the ship.
  */
-public interface Item
+public class Item
 {
-    /**
-     * Retrieves the name of this item.
-     */
-    String getName();
+	private String name;
+	private String directory;
+	private Drawable skin;
+	
+	public Item(String name, String directory){
+		this.name = name;
+		this.directory = directory;
+	}
+	
+    public String getName(){
+    	return this.name;
+    }
 
-    /**
-     * Retrieves a simple representation of the item's name, useful for creating
-     * a convention for file names.
-     */
-    String getSimpleName();
+    public String getSimpleName(){
+    	return this.name.toLowerCase();
+    }
+    
+    public String getDirectory(){
+    	return this.directory;
+    }
 
-    /**
-     * Retrieves the price to acquire this item.
-     */
-    int getPrice();
-
-    /**
-     * Retrieves the price as text.
-     */
-    String getPriceAsText();
+    public void setSkin(Drawable skin){
+    	this.skin = skin;
+    }
+    
+    public Drawable getSkin(){
+    	return this.skin;
+    }
 }

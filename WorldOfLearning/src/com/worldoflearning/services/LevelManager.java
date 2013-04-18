@@ -11,13 +11,15 @@ import com.worldoflearning.domain.Level;
 public class LevelManager
 {
     private final List<Level> levels;
+    private final String[] w1l1= {"circle", "hexagon", "oval", "pentagon", "semi-circle", "square", "trapezoid", "triangle"};
 
     /**
      * Creates the level manager.
      */
     public LevelManager()
     {
-        // create the level 2
+    	
+        /*// create the level 2
         Level level2 = new Level( 2 );
         level2.setName( "Episode 3" );
 
@@ -29,13 +31,17 @@ public class LevelManager
         // create the level 0
         Level level0 = new Level( 0 );
         level0.setName( "Episode 1" );
-        level0.setNextLevel( level0 );
-
-        // register the levels
-        levels = new ArrayList<Level>( 3 );
-        levels.add( level0 );
-        levels.add( level1 );
-        levels.add( level2 );
+        level0.setNextLevel( level0 );*/
+    	
+    	levels = new ArrayList<Level>();
+    	
+    	for(int world = 0; world < 2; world++){
+    		for(int level = 0; level < 4; level++){
+    			int id = world*4 + level;
+    			Level l = new Level(id, world, level, "World "+ (world+1)+" - Level "+ (level+1), w1l1);
+    			levels.add(l);
+    		}
+    	}
     }
 
     /**

@@ -168,6 +168,67 @@ level-screen/level-screen
   orig: 512, 301
   offset: 0, 0
   index: -1
+  
+w-1-l-1.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+level-screen/w-1-l-1/triangle
+  rotate: false
+  xy: 0, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+level-screen/w-1-l-1/trapezoid
+  rotate: false
+  xy: 256, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+level-screen/w-1-l-1/square
+  rotate: false
+  xy: 512, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+level-screen/w-1-l-1/semi-circle
+  rotate: false
+  xy: 768, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+level-screen/w-1-l-1/circle
+  rotate: false
+  xy: 1024, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+level-screen/w-1-l-1/oval
+  rotate: false
+  xy: 1280, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+level-screen/w-1-l-1/hexagon
+  rotate: false
+  xy: 1536, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+level-screen/w-1-l-1/pentagon
+  rotate: false
+  xy: 1792, 0
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
 
 pages3.png
 format: RGBA8888

@@ -25,18 +25,11 @@ public class Profile
 {
 	private int currentWorldId;
     private int currentLevelId;
-    private int credits;
     private Map<Integer,Integer> highScores;
-    private Ship ship;
 
     public Profile()
     {
-        credits = 1000;
         highScores = new HashMap<Integer,Integer>();
-        ship = new Ship();
-        ship.install( ShipModel.USP_TALON );
-        ship.install( FrontGun.PULSE_CANNON );
-        ship.install( Shield.SIF );
     }
 
     /**
@@ -87,64 +80,7 @@ public class Profile
         }
         return false;
     }
-
-    /**
-     * Retrieves the amount of credits the player has.
-     */
-    public int getCredits()
-    {
-        return credits;
-    }
-
-    /**
-     * Retrieves the amount of credits as text.
-     */
-    public String getCreditsAsText()
-    {
-        return TextUtils.creditStyle( credits );
-    }
-
-    /**
-     * Retrieves the current ship configuration.
-     */
-    public Ship getShip()
-    {
-        return ship;
-    }
-
-    /**
-     * Checks whether the given item can be bought.
-     */
-    public boolean canBuy(
-        Item item )
-    {
-        if( ship.contains( item ) ) {
-            return false;
-        }
-        if( item.getPrice() > credits ) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Buys the given item.
-     */
-    public boolean buy(
-        Item item )
-    {
-        if( canBuy( item ) ) {
-            Gdx.app.log( WorldOfLearning.LOG, "Buying item: " + item );
-            ship.install( item );
-            credits -= item.getPrice();
-            Gdx.app.log( WorldOfLearning.LOG, "Credits available: " + credits );
-            return true;
-        } else {
-            Gdx.app.log( WorldOfLearning.LOG, "No credits to buy item: " + item );
-            return false;
-        }
-    }
-
+    
     // Serializable implementation
 
     @SuppressWarnings( "unchecked" )
@@ -156,7 +92,6 @@ public class Profile
         // read the some basic properties
     	currentWorldId = json.readValue("currentWorldId", Integer.class, jsonData);
         currentLevelId = json.readValue( "currentLevelId", Integer.class, jsonData );
-        credits = json.readValue( "credits", Integer.class, jsonData );
 
         // libgdx handles the keys of JSON formatted HashMaps as Strings, but we
         // want it to be an integer instead (levelId)
@@ -167,9 +102,6 @@ public class Profile
             Integer highScore = highScores.get( levelIdAsString );
             this.highScores.put( levelId, highScore );
         }
-
-        // finally, read the ship
-        ship = json.readValue( "ship", Ship.class, jsonData );
     }
 
     @Override
@@ -178,8 +110,6 @@ public class Profile
     {
     	json.writeValue( "currentWorldId", currentWorldId );
         json.writeValue( "currentLevelId", currentLevelId );
-        json.writeValue( "credits", credits );
         json.writeValue( "highScores", highScores );
-        json.writeValue( "ship", ship );
     }
 }

@@ -1,17 +1,34 @@
 package com.worldoflearning.domain;
 
+import java.util.ArrayList;
+
 /**
  * A playable level.
  */
 public class Level
 {
     private final int id;
-    private String name;
+    private final int worldId;
+    private final int levelId;
+    
     private boolean completed;
+    private boolean isLocked;
+    
+    private String name;
     private Level nextLevel;
+    private ArrayList<Item> items;
 
-    public Level( int id ){
+    public Level( int id, int worldId, int levelId, String name, String[] itemsName){
         this.id = id;
+        this.worldId = worldId;
+        this.levelId = levelId;
+        this.name = name;
+        this.isLocked = true;
+        this.items = new ArrayList<Item>();
+        for(String itemName: itemsName){
+        	Item item = new Item(itemName, "level-screen/w-"+(worldId+1)+"-l-"+(levelId+1)+"/"+itemName);
+        	this.items.add(item);
+        }
     }
 
     /**
@@ -20,6 +37,14 @@ public class Level
     public int getId()
     {
         return id;
+    }
+    
+    public int getWorldId(){
+    	return worldId;
+    }
+    
+    public int getLevelId(){
+    	return levelId;
     }
 
     /**
@@ -38,6 +63,14 @@ public class Level
     {
         this.name = name;
     }
+    
+    public ArrayList<Item> getItems(){
+    	return items;
+    }
+    
+    public void setItems(ArrayList<Item> items){
+    	this.items = items;
+    }
 
     /**
      * Retrieves whether this level is completed.
@@ -54,6 +87,14 @@ public class Level
         boolean completed )
     {
         this.completed = completed;
+    }
+    
+    public void unLockLevel(){
+    	this.isLocked = false;
+    }
+    
+    public boolean isLocked(){
+    	return this.isLocked;
     }
 
     /**

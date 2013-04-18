@@ -4,20 +4,31 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+<<<<<<< HEAD
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+=======
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+>>>>>>> branch 'master' of https://github.com/minhv1993/WorldOfLearning.git
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.worldoflearning.WorldOfLearning;
 import com.worldoflearning.domain.GameTimer;
+import com.worldoflearning.domain.Item;
 import com.worldoflearning.domain.Level;
 import com.worldoflearning.domain.Profile;
 import com.worldoflearning.services.MusicManager.WorldOfLearningMusic;
+<<<<<<< HEAD
+import com.worldoflearning.utils.GameInputProcessor;
+=======
 import com.worldoflearning.services.SoundManager.WorldOfLearningSound;
 import com.worldoflearning.utils.DefaultActorListener;
+>>>>>>> branch 'master' of https://github.com/minhv1993/WorldOfLearning.git
 
 public class GamePlay extends AbstractScreen {
 	private int targetWorldId;
@@ -28,22 +39,25 @@ public class GamePlay extends AbstractScreen {
 	
 	private Profile profile;
 	private Level level;
+	private ArrayList<Item> levelItems;
+	private ArrayList<Item> playFieldItems;
+	
+	private ImageButton toMatch;
+	
 	private Texture background;
 	private GameTimer timer;
 	private GameTimer beginTimer;
-	private SpriteBatch batch;
 	private Random rand;
 	
-	private BitmapFont timeFont;
-	private BitmapFont scoreFont;
-	private BitmapFont countdownFont;
 	
-	private OrthographicCamera cam;
 	
+<<<<<<< HEAD
+=======
 	private ArrayList<String> tempList;
 
 	
 	
+>>>>>>> branch 'master' of https://github.com/minhv1993/WorldOfLearning.git
 	//use this boolean value to determine if the button pushed is correct. 
 	//If it is, play the the correct sound and increment the counter.
 	private boolean isCorrect;
@@ -54,7 +68,13 @@ public class GamePlay extends AbstractScreen {
 		super(game);
 		//back key shouldn't exit app
         //Gdx.input.setCatchBackKey(true);
+<<<<<<< HEAD
+
+		rand = new Random();
+		
+=======
         
+>>>>>>> branch 'master' of https://github.com/minhv1993/WorldOfLearning.git
 		
 		//temporary setting - DO NOT LEAVE THIS HERE!
 		isCorrect = false;
@@ -63,26 +83,18 @@ public class GamePlay extends AbstractScreen {
 		
 		profile = game.getProfileManager().retrieveProfile();
 		level = game.getLevelManager().findLevelById(targetWorldId, targetLevelId);
-		
-		timeFont = this.getFont();
-		scoreFont = this.getFont();
-		countdownFont = this.getFont();
-		
-		cam = new OrthographicCamera();
-		cam.setToOrtho(false, 800, 480);
-		batch = new SpriteBatch();
+		levelItems = level.getItems();
+		playFieldItems = new ArrayList<Item>(4);
+		for(int i = 0; i < 4; i++){
+			playFieldItems.add(levelItems.get(rand.nextInt(levelItems.size())));
+		}
+
+		toMatch = new ImageButton(new TextureRegionDrawable( getAtlas().findRegion(playFieldItems.get(rand.nextInt(playFieldItems.size())).getDirectory())));
 
 		timer = new GameTimer(10000);
 		beginTimer = new GameTimer(4000);
 		
 		scores = 0;
-		
-		tempList = new ArrayList<String>();
-		tempList.add("A");
-		tempList.add("B");
-		tempList.add("C");
-		
-		rand = new Random();
 		
 		// set up game input processor to catch back button
 		//Gdx.input.setCatchBackKey(true);
@@ -98,6 +110,9 @@ public class GamePlay extends AbstractScreen {
 	@Override
 	public void show(){
 		super.show();
+
+        // retrieve the splash image's region from the atlas
+
         // play level music
 		game.getMusicManager().play(WorldOfLearningMusic.LEVEL);
 		
@@ -105,19 +120,24 @@ public class GamePlay extends AbstractScreen {
 		table.columnDefaults(0).padLeft(5);
 		table.columnDefaults(6).padRight(5);
 		
-		for(int y = 0; y < 4; y++){
+		for(int y = 0; y < 3; y++){
 			table.row();
-			for(int x = 0; x < 6; x++){
+			for(int x = 0; x < 4; x++){
 				if(x == 0){
 					if(y == 0){
 						table.add( "Time" ).fillX();
 						table.add(Integer.toString(timer.getTimeRemainingInSeconds())).fillX();
-					} else if (y == 1){
-						table.add( "Shape" ).fillX().colspan(2);
-					} else if (y == 2){
 						table.add( "Score" ).fillX();
 						table.add( Integer.toString(scores)).fillX();
+					} else if (y == 1){
+						table.add( toMatch ).fillX().size(100,100).colspan(2).padRight(20);
 					} else {
+<<<<<<< HEAD
+						TextButton temp = new TextButton( "Pause", getSkin() );
+						table.add(temp).fillX();
+						TextButton temp2 = new TextButton( "Option", getSkin() );
+						table.add(temp2).fillX().padRight(20);
+=======
 						TextButton pauseButton = new TextButton( "Pause", getSkin() );
 						table.add(pauseButton).fillX();
 						
@@ -160,7 +180,30 @@ public class GamePlay extends AbstractScreen {
 				                 
 				            }
 				        } );
+>>>>>>> branch 'master' of https://github.com/minhv1993/WorldOfLearning.git
 					}
+<<<<<<< HEAD
+				}else if (x >1){
+					if(y > 0){
+						if(y == 1){
+							if(x == 2){
+								ImageButton ib = new ImageButton(new TextureRegionDrawable(  getAtlas().findRegion(playFieldItems.get(0).getDirectory()) ));
+								table.add(ib).fillY().size(100, 100).space(2);
+							}else{
+								ImageButton ib = new ImageButton(new TextureRegionDrawable(  getAtlas().findRegion(playFieldItems.get(1).getDirectory()) ));
+								table.add(ib).fillY().size(100, 100).space(2);
+							}
+						} else {
+							if(x == 2){
+								ImageButton ib = new ImageButton(new TextureRegionDrawable(  getAtlas().findRegion(playFieldItems.get(2).getDirectory()) ));
+								table.add(ib).fillY().size(100, 100).space(2);
+							}else{
+								ImageButton ib = new ImageButton(new TextureRegionDrawable(  getAtlas().findRegion(playFieldItems.get(3).getDirectory()) ));
+								table.add(ib).fillY().size(100, 100).space(2);
+							}
+						}
+					}
+=======
 				}else{
 					TextButton temp = new TextButton( tempList.get(rand.nextInt(tempList.size())).toString(), getSkin() );
 					table.add(temp).fillX().size(55, 55);
@@ -185,6 +228,7 @@ public class GamePlay extends AbstractScreen {
 			                 
 			            }
 			        } );
+>>>>>>> branch 'master' of https://github.com/minhv1993/WorldOfLearning.git
 				}
 			}
 		}
