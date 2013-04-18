@@ -3,9 +3,6 @@ package com.worldoflearning.screens;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -15,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.worldoflearning.WorldOfLearning;
 import com.worldoflearning.domain.GameTimer;
 import com.worldoflearning.domain.Item;
@@ -44,17 +43,18 @@ public class GamePlay extends AbstractScreen {
 	public ImageButton tile3;
 	public ImageButton tile4;
 	
-	public TextButton optionButton;
-	
 	private GameTimer timer;
 	private GameTimer beginTimer;
 	public Random rand;
+	
+	private Timer libTimer;
 	
 	public GamePlay(WorldOfLearning game, int targetWorldId, int targetLevelId) {
 		super(game);
 		//back key shouldn't exit app
         //Gdx.input.setCatchBackKey(true);
 		rand = new Random();
+		libTimer = new Timer();
 		
 		profile = game.getProfileManager().retrieveProfile();
 		level = game.getLevelManager().findLevelById(targetWorldId, targetLevelId);
@@ -183,8 +183,6 @@ public class GamePlay extends AbstractScreen {
 						table.add( toMatch ).fillX().size(100,100).colspan(2).padRight(20);
 					} else if (y == 2){
 						TextButton pauseButton = new TextButton( "Pause", getSkin() );
-						
-						//Temporary listener for debugging purposes.  Send back to levels.
 						pauseButton.addListener( new DefaultActorListener() {
 				            @Override
 				            public void touchUp(
@@ -201,7 +199,7 @@ public class GamePlay extends AbstractScreen {
 				        } );
 						
 						table.add(pauseButton).fillX();
-						optionButton = new TextButton( "Option", getSkin() );
+						TextButton optionButton = new TextButton( "Option", getSkin() );
 						optionButton.addListener( new DefaultActorListener() {
 				            @Override
 				            public void touchUp(
