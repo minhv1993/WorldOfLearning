@@ -5,15 +5,8 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-<<<<<<< HEAD
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-=======
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
->>>>>>> branch 'master' of https://github.com/minhv1993/WorldOfLearning.git
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -23,12 +16,8 @@ import com.worldoflearning.domain.Item;
 import com.worldoflearning.domain.Level;
 import com.worldoflearning.domain.Profile;
 import com.worldoflearning.services.MusicManager.WorldOfLearningMusic;
-<<<<<<< HEAD
-import com.worldoflearning.utils.GameInputProcessor;
-=======
 import com.worldoflearning.services.SoundManager.WorldOfLearningSound;
 import com.worldoflearning.utils.DefaultActorListener;
->>>>>>> branch 'master' of https://github.com/minhv1993/WorldOfLearning.git
 
 public class GamePlay extends AbstractScreen {
 	private int targetWorldId;
@@ -49,15 +38,7 @@ public class GamePlay extends AbstractScreen {
 	private GameTimer beginTimer;
 	private Random rand;
 	
-	
-	
-<<<<<<< HEAD
-=======
-	private ArrayList<String> tempList;
-
-	
-	
->>>>>>> branch 'master' of https://github.com/minhv1993/WorldOfLearning.git
+	//github.com/minhv1993/WorldOfLearning.git
 	//use this boolean value to determine if the button pushed is correct. 
 	//If it is, play the the correct sound and increment the counter.
 	private boolean isCorrect;
@@ -68,14 +49,9 @@ public class GamePlay extends AbstractScreen {
 		super(game);
 		//back key shouldn't exit app
         //Gdx.input.setCatchBackKey(true);
-<<<<<<< HEAD
 
 		rand = new Random();
-		
-=======
         
->>>>>>> branch 'master' of https://github.com/minhv1993/WorldOfLearning.git
-		
 		//temporary setting - DO NOT LEAVE THIS HERE!
 		isCorrect = false;
 		
@@ -132,14 +108,7 @@ public class GamePlay extends AbstractScreen {
 					} else if (y == 1){
 						table.add( toMatch ).fillX().size(100,100).colspan(2).padRight(20);
 					} else {
-<<<<<<< HEAD
-						TextButton temp = new TextButton( "Pause", getSkin() );
-						table.add(temp).fillX();
-						TextButton temp2 = new TextButton( "Option", getSkin() );
-						table.add(temp2).fillX().padRight(20);
-=======
 						TextButton pauseButton = new TextButton( "Pause", getSkin() );
-						table.add(pauseButton).fillX();
 						
 						//Temporary listener for debugging purposes.  Send back to levels.
 						pauseButton.addListener( new DefaultActorListener() {
@@ -158,8 +127,8 @@ public class GamePlay extends AbstractScreen {
 				            }
 				        } );
 						
+						table.add(pauseButton).fillX();
 						TextButton optionButton = new TextButton( "Option", getSkin() );
-						table.add(optionButton).fillX();
 						optionButton.addListener( new DefaultActorListener() {
 				            @Override
 				            public void touchUp(
@@ -180,58 +149,53 @@ public class GamePlay extends AbstractScreen {
 				                 
 				            }
 				        } );
->>>>>>> branch 'master' of https://github.com/minhv1993/WorldOfLearning.git
+						table.add(optionButton).fillX();
 					}
-<<<<<<< HEAD
 				}else if (x >1){
 					if(y > 0){
 						if(y == 1){
 							if(x == 2){
-								ImageButton ib = new ImageButton(new TextureRegionDrawable(  getAtlas().findRegion(playFieldItems.get(0).getDirectory()) ));
-								table.add(ib).fillY().size(100, 100).space(2);
+								addImageButton(0, table);
 							}else{
-								ImageButton ib = new ImageButton(new TextureRegionDrawable(  getAtlas().findRegion(playFieldItems.get(1).getDirectory()) ));
-								table.add(ib).fillY().size(100, 100).space(2);
+								addImageButton(1, table);
 							}
 						} else {
 							if(x == 2){
-								ImageButton ib = new ImageButton(new TextureRegionDrawable(  getAtlas().findRegion(playFieldItems.get(2).getDirectory()) ));
-								table.add(ib).fillY().size(100, 100).space(2);
+								addImageButton(2, table);
 							}else{
-								ImageButton ib = new ImageButton(new TextureRegionDrawable(  getAtlas().findRegion(playFieldItems.get(3).getDirectory()) ));
-								table.add(ib).fillY().size(100, 100).space(2);
+								addImageButton(3, table);
 							}
 						}
 					}
-=======
-				}else{
-					TextButton temp = new TextButton( tempList.get(rand.nextInt(tempList.size())).toString(), getSkin() );
-					table.add(temp).fillX().size(55, 55);
-					temp.addListener( new DefaultActorListener() {
-			            @Override
-			            public void touchUp(
-			                InputEvent event,
-			                float x,
-			                float y,
-			                int pointer,
-			                int button )
-			            {
-			                super.touchUp( event, x, y, pointer, button );
-			               
-			                //if correct button is push, play this sound:
-			                if(isCorrect) {
-			                	game.getSoundManager().play( WorldOfLearningSound.CORRECT );
-			                }
-			                else {
-			                game.getSoundManager().play( WorldOfLearningSound.WRONG );
-			                }
-			                 
-			            }
-			        } );
->>>>>>> branch 'master' of https://github.com/minhv1993/WorldOfLearning.git
 				}
 			}
 		}
+	}
+	
+	public void addImageButton(int id, Table table){
+		ImageButton ib = new ImageButton(new TextureRegionDrawable(  getAtlas().findRegion(playFieldItems.get(id).getDirectory()) ));
+		ib.addListener( new DefaultActorListener() {
+            @Override
+            public void touchUp(
+                InputEvent event,
+                float x,
+                float y,
+                int pointer,
+                int button )
+            {
+                super.touchUp( event, x, y, pointer, button );
+               
+                //if correct button is push, play this sound:
+                if(isCorrect) {
+                	game.getSoundManager().play( WorldOfLearningSound.CORRECT );
+                }
+                else {
+                game.getSoundManager().play( WorldOfLearningSound.WRONG );
+                }
+                 
+            }
+        } );
+		table.add(ib).fillY().size(100, 100).space(2);
 	}
 	
 	/*@Override
