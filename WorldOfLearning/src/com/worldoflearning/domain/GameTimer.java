@@ -19,10 +19,13 @@
 
 package com.worldoflearning.domain;
 
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+
 /*
  * simple timer used to countdown remaining time in the game
  */
-public class GameTimer {
+public class GameTimer implements EventListener {
 	
 	long timeStarted;
 	long timeToFinish;
@@ -46,5 +49,11 @@ public class GameTimer {
 	
 	public int getTimeRemainingInSeconds() {
 		return (int)((timeToFinish - System.currentTimeMillis()) / 1000);
+	}
+
+	@Override
+	public boolean handle(Event event) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

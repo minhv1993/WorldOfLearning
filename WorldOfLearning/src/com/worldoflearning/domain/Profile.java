@@ -31,6 +31,10 @@ public class Profile
     {
         highScores = new HashMap<Integer,Integer>();
     }
+    
+    public void setCurrentLevelId(int currentLevelId){
+    	this.currentLevelId = currentLevelId;
+    }
 
     /**
      * Retrieves the ID of the next playable level.
@@ -38,6 +42,10 @@ public class Profile
     public int getCurrentLevelId()
     {
         return currentLevelId;
+    }
+    
+    public void setCurrentWorldId(int currentWorldId){
+    	this.currentWorldId = currentWorldId;
     }
     
     /**
@@ -48,7 +56,7 @@ public class Profile
     }
 
     /**
-     * Retrieves the high scores for each level (Level-ID -> High score).
+     * Retrieves the high scores for each level (WolrdID*4 + Level-ID -> High score).
      */
     public Map<Integer,Integer> getHighScores()
     {
@@ -58,9 +66,7 @@ public class Profile
     /**
      * Gets the current high score for the given level.
      */
-    public int getHighScore(
-        int levelId )
-    {
+    public int getHighScore(int worldId, int levelId){
         if( highScores == null ) return 0;
         Integer highScore = highScores.get( levelId );
         return ( highScore == null ? 0 : highScore );
@@ -70,11 +76,8 @@ public class Profile
      * Notifies the score on the given level. Returns <code>true</code> if its a
      * high score.
      */
-    public boolean notifyScore(
-        int levelId,
-        int score )
-    {
-        if( score > getHighScore( levelId ) ) {
+    public boolean notifyScore(int worldId, int levelId, int score ){
+        if( score > getHighScore( worldId, levelId ) ) {
             highScores.put( levelId, score );
             return true;
         }
@@ -85,9 +88,7 @@ public class Profile
 
     @SuppressWarnings( "unchecked" )
     @Override
-    public void read(
-        Json json,
-        OrderedMap<String,Object> jsonData )
+    public void read(Json json, OrderedMap<String,Object> jsonData )
     {
         // read the some basic properties
     	currentWorldId = json.readValue("currentWorldId", Integer.class, jsonData);
@@ -105,8 +106,7 @@ public class Profile
     }
 
     @Override
-    public void write(
-        Json json )
+    public void write(Json json )
     {
     	json.writeValue( "currentWorldId", currentWorldId );
         json.writeValue( "currentLevelId", currentLevelId );
