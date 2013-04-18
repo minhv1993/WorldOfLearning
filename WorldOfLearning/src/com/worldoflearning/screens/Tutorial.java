@@ -1,5 +1,6 @@
 package com.worldoflearning.screens;
 
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Random;
 import com.badlogic.gdx.Gdx;
@@ -30,6 +31,8 @@ public class Tutorial extends AbstractScreen {
 	private Level level;
 	private ArrayList<Item> levelItems;
 	private Table table;
+	private Table temp;
+	private int counter;
 	
 	public Tutorial(WorldOfLearning game, int targetWorldId, int targetLevelId) {
 		super(game);
@@ -38,6 +41,7 @@ public class Tutorial extends AbstractScreen {
 		targetLevelId = this.targetLevelId;
 		level = game.getLevelManager().findLevelById(targetWorldId, targetLevelId);
 		levelItems = level.getItems();
+		counter = 0;
 	}
 	
 	
@@ -55,8 +59,8 @@ public class Tutorial extends AbstractScreen {
 		
         table = super.getTable();
         table.columnDefaults(0).padRight(10);
-        table.columnDefaults(2).padLeft(10);
-        table.add( " " ).spaceBottom( 300 ).colspan(2);
+        table.columnDefaults(1).padLeft(10);
+        table.add( " " ).spaceBottom( 300 );
         table.row();
 		
         TextButton yesButton = new TextButton( "Teach Me!", getSkin() );
@@ -72,8 +76,8 @@ public class Tutorial extends AbstractScreen {
                 super.touchUp( event, x, y, pointer, button );
                 game.getSoundManager().play( WorldOfLearningSound.CLICK );
                 table.clear();
-                table = setTutorial(table);
-                //CREATE TUTORIAL FROM HERE!
+                table = setTutorial(table, counter);
+
             }
         } );
         table.add( yesButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).padRight(10);
@@ -100,13 +104,12 @@ public class Tutorial extends AbstractScreen {
 	}
 	
 	
-	private Table setTutorial(Table table) {
-		Table temp = table;
+	private Table setTutorial(Table table, int i) {
+		temp = table;
 		
 		
-		temp.add("Click here!");
-		temp.row();
-		temp.add(new ImageButton( new TextureRegionDrawable (getAtlas().findRegion(levelItems.get(0).getDirectory())))).center();
+		temp.add(new ImageButton( new TextureRegionDrawable (getAtlas().findRegion(levelItems.get(i).getDirectory())))).fillX();
+		temp.add(levelItems.get(i).getName());
 		temp.row();
 		final TextButton yesButton = new TextButton( "NEXT!", getSkin() );
         yesButton.addListener( new DefaultActorListener() {
@@ -120,8 +123,16 @@ public class Tutorial extends AbstractScreen {
             {
                 super.touchUp( event, x, y, pointer, button );
                 game.getSoundManager().play( WorldOfLearningSound.CLICK );
-                yesButton.setText("Match these!");
-               
+                //temp.add(new ImageButton( new TextureRegionDrawable (getAtlas().findRegion(levelItems.get(0).getDirectory())))).center();
+               counter++;
+               temp.clear();
+               //if try to access something no in the array, then end tutorial
+               if (counter == levelItems.size()-1) {
+            	   //end tutorial
+            	   endTutorial(temp);  
+               }else{
+            	   setTutorial(temp, counter);
+               }
             }
         } );
         table.add( yesButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).padRight(10);
@@ -149,7 +160,30 @@ public class Tutorial extends AbstractScreen {
 		
 		return temp;
 	}
-	
+	private Table endTutorial (Table table) {
+		table = this.table;
+		table.defaults().spaceBottom( 30 );
+        TextButton backButton = new TextButton( "Continue" , getSkin() );
+        backButton.addListener( new DefaultActorListener() {
+            @Override
+            public void touchUp(
+                InputEvent event,
+                float x,
+                float y,
+                int pointer,
+                int button )
+            {
+                super.touchUp( event, x, y, pointer, button );
+                game.getSoundManager().play( WorldOfLearningSound.CLICK );
+                game.setScreen( new GamePlay ( game, targetWorldId, targetLevelId ) );
+            }
+        } );
+        table.row();
+        table.add( backButton ).size( 250, 60 );
+		
+		return table;
+		
+	}
 	
 	
 }
