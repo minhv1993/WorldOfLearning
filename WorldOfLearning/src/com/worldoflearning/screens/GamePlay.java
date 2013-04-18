@@ -166,6 +166,7 @@ public class GamePlay extends AbstractScreen {
 		toMatch.setName(itemToMatch.getName());
 		
 		Table table = super.getTable();
+		table.clear();
 		table.columnDefaults(0).padLeft(5);
 		table.columnDefaults(6).padRight(5);
 		
