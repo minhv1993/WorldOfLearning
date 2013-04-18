@@ -50,6 +50,9 @@ public class GameTimer implements EventListener {
 	public int getTimeRemainingInSeconds() {
 		return (int)((timeToFinish - System.currentTimeMillis()) / 1000);
 	}
+	public void pauseTime(long pTime) {
+		
+	}
 
 	@Override
 	public boolean handle(Event event) {
