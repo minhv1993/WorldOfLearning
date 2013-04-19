@@ -65,6 +65,7 @@ public class GamePlay extends AbstractScreen {
         //Gdx.input.setCatchBackKey(true);
 		this.targetWorldId = targetWorldId;
 		this.targetLevelId = targetLevelId;
+		this.profileId = targetWorldId*4+targetLevelId;
 		
 		rand = new Random();
 		
@@ -323,6 +324,9 @@ public class GamePlay extends AbstractScreen {
 					}
 				}
 			}else{
+				final int nextLevel = (targetLevelId==3)?((targetWorldId==1)?3:0):(targetLevelId+1);
+				final int nextWorld = (targetWorldId==1)?1:((targetLevelId==3)?1:0);
+				
 				table.columnDefaults(0).padRight(5);
 				table.columnDefaults(1).padLeft(5);
 				table.row();
@@ -338,8 +342,10 @@ public class GamePlay extends AbstractScreen {
 				table.add(Integer.toString(scores)).fillX().right();
 				table.row();
 				
-				final int nextLevel = (targetLevelId==3)?((targetWorldId==1)?3:0):(targetLevelId+1);
-				final int nextWorld = (targetWorldId==1)?1:((targetLevelId==3)?1:0);
+				if(profile.getCurrentLevelId()<(nextWorld*4+nextLevel))
+					profile.setCurrentLevelId(nextWorld*4+nextLevel);
+				game.getProfileManager().setProfile(profile);
+				game.getProfileManager().persist();
 				
 				TextButton levelsButton = new TextButton( "Levels Select", getSkin() );
 				levelsButton.addListener(new DefaultActorListener(){
@@ -448,7 +454,6 @@ public class GamePlay extends AbstractScreen {
 	        table.row();
 	        table.add( backButton ).size( 150, 30 ).colspan( 3 ).padTop(30);
 		}
-			
 		stage.addActor(table);
 	}
 

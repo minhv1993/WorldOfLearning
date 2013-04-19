@@ -145,49 +145,49 @@ level-screen/w-1-l-2/two
   orig: 256, 256
   offset: 0, 0
   index: -1
-  level-screen/w-1-l-2/three
+level-screen/w-1-l-2/three
   rotate: false
   xy: 768, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-  level-screen/w-1-l-2/four
+level-screen/w-1-l-2/four
   rotate: false
   xy: 1024, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-  level-screen/w-1-l-2/five
+level-screen/w-1-l-2/five
   rotate: false
   xy: 1280, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-  level-screen/w-1-l-2/six
+level-screen/w-1-l-2/six
   rotate: false
   xy: 1536, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-  level-screen/w-1-l-2/seven
+level-screen/w-1-l-2/seven
   rotate: false
   xy: 1792, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-  level-screen/w-1-l-2/eight
+level-screen/w-1-l-2/eight
   rotate: false
   xy: 2048, 0
   size: 256, 256
   orig: 256, 256
   offset: 0, 0
   index: -1
-  level-screen/w-1-l-2/nine
+level-screen/w-1-l-2/nine
   rotate: false
   xy: 2304, 0
   size: 256, 256
