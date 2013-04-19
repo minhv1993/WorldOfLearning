@@ -12,7 +12,7 @@ public class PreferencesManager
     private static final String PREF_VOLUME = "volume";
     private static final String PREF_MUSIC_ENABLED = "music.enabled";
     private static final String PREF_SOUND_ENABLED = "sound.enabled";
-    private static final String PREFS_NAME = "tyrian";
+    private static final String PREFS_NAME = "worldoflearning";
 
     public PreferencesManager()
     {
