@@ -459,7 +459,7 @@ level-screen/w-1-l-4/yellow-two
   offset: 0, 0
   index: -1
   
-  w-2-l-1.png
+w-2-l-1.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -470,7 +470,7 @@ level-screen/w-2-l-1/apple
   orig: 256, 256
   offset: 0, 0
   index: -1
-  level-screen/w-2-l-1/banana
+level-screen/w-2-l-1/banana
   rotate: false
   xy: 256, 0
   size: 256, 256
@@ -521,8 +521,8 @@ level-screen/w-2-l-1/watermelon
   index: -1
 
   
-  w-2-l-2.png
-  format: RGBA8888
+w-2-l-2.png
+format: RGBA8888
 filter: Linear,Linear
 repeat: none
 level-screen/w-2-l-2/cat
@@ -532,7 +532,7 @@ level-screen/w-2-l-2/cat
   orig: 256, 256
   offset: 0, 0
   index: -1
-  level-screen/w-2-l-2/dog
+level-screen/w-2-l-2/dog
   rotate: false
   xy: 256, 0
   size: 256, 256
@@ -581,7 +581,7 @@ level-screen/w-2-l-2/owl
   orig: 256, 256
   offset: 0, 0
   index: -1
-  level-screen/w-2-l-2/seal
+level-screen/w-2-l-2/seal
   rotate: false
   xy: 0, 256
   size: 256, 256
@@ -597,7 +597,7 @@ level-screen/w-2-l-2/turtle
   index: -1
   
   
-  w-2-l-3.png
+w-2-l-3.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -608,7 +608,7 @@ level-screen/w-2-l-3/angry
   orig: 256, 256
   offset: 0, 0
   index: -1
-  level-screen/w-2-l-3/confused
+level-screen/w-2-l-3/confused
   rotate: false
   xy: 256, 0
   size: 256, 256
@@ -658,8 +658,7 @@ level-screen/w-2-l-3/sleepy
   offset: 0, 0
   index: -1
   
-  
-  w-1-l-4.png
+w-1-l-4.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
