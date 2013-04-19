@@ -21,10 +21,7 @@ public class Credits extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
-		
 		ScrollTest temp = new ScrollTest();
-		temp.create();
-		System.out.println("I was here!");
 	}
 
 	public class ScrollTest implements ApplicationListener {
