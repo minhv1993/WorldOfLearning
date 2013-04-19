@@ -2,8 +2,11 @@ package com.worldoflearning.screens;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -29,7 +32,7 @@ public class Tutorial extends AbstractScreen {
 	private Table temp;
 	private int counter;
 
-	public Tutorial(WorldOfLearning game, int targetWorldId, int targetLevelId) {
+	public Tutorial(final WorldOfLearning game, final int targetWorldId, int targetLevelId) {
 		super(game);
 
 		this.targetWorldId = targetWorldId;
@@ -37,6 +40,19 @@ public class Tutorial extends AbstractScreen {
 		level = game.getLevelManager().findLevelById(targetWorldId, targetLevelId);
 		levelItems = level.getItems();
 		counter = 0;
+
+		// set up game input processor to catch back button
+		Gdx.input.setCatchBackKey(true);
+		stage.addListener(new InputListener(){
+			@Override
+			public boolean keyDown(InputEvent event, int keyCode){
+				if (keyCode == (Keys.BACK) || keyCode == (Keys.ESCAPE)){
+					game.getSoundManager().play( WorldOfLearningSound.CLICK );
+					game.setScreen(new Levels(game, targetWorldId));
+				}   
+				return true;
+			}
+		});
 	}
 
 	@Override

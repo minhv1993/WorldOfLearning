@@ -2,9 +2,12 @@ package com.worldoflearning.screens;
 
 import java.util.Locale;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -24,8 +27,20 @@ public class Options extends AbstractScreen {
 	private Label volumeValue;
 	private Image background;
 	
-	public Options(WorldOfLearning game) {
+	public Options(final WorldOfLearning game) {
 		super(game);
+		// set up game input processor to catch back button
+		Gdx.input.setCatchBackKey(true);
+		stage.addListener(new InputListener(){
+			@Override
+			public boolean keyDown(InputEvent event, int keyCode){
+				if (keyCode == (Keys.BACK) || keyCode == (Keys.ESCAPE)){
+					game.getSoundManager().play( WorldOfLearningSound.CLICK );
+					game.setScreen(new Menu(game));
+				}   
+				return true;
+			}
+		});
 	}
 	
 	@Override

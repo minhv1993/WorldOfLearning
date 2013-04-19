@@ -2,8 +2,11 @@ package com.worldoflearning.screens;
 
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -20,9 +23,21 @@ import com.worldoflearning.utils.DefaultActorListener;
 public class HighScores extends AbstractScreen {
 	Profile profile;
 
-	public HighScores(WorldOfLearning game) {
+	public HighScores(final WorldOfLearning game) {
 		super(game);
 		profile = game.getProfileManager().retrieveProfile();
+		// set up game input processor to catch back button
+		Gdx.input.setCatchBackKey(true);
+		stage.addListener(new InputListener(){
+			@Override
+			public boolean keyDown(InputEvent event, int keyCode){
+				if (keyCode == (Keys.BACK) || keyCode == (Keys.ESCAPE)){
+					game.getSoundManager().play( WorldOfLearningSound.CLICK );
+					game.setScreen(new Menu(game));
+				}   
+				return true;
+			}
+		});
 	}
 
 	public void show() {

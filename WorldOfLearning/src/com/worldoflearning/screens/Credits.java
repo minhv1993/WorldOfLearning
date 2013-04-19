@@ -1,7 +1,10 @@
 package com.worldoflearning.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -24,8 +27,20 @@ public class Credits extends AbstractScreen {
 								"Confirmation cue - Bertref, Freesound.org\nRejection cue - Autistic Lucario, Freesound.org\n\n\n\n" +
 								"Backgrounds:\nSeanPhan";
 
-	public Credits(WorldOfLearning game) {
+	public Credits(final WorldOfLearning game) {
 		super(game);
+		// set up game input processor to catch back button
+		Gdx.input.setCatchBackKey(true);
+		stage.addListener(new InputListener(){
+			@Override
+			public boolean keyDown(InputEvent event, int keyCode){
+				if (keyCode == (Keys.BACK) || keyCode == (Keys.ESCAPE)){
+					game.getSoundManager().play( WorldOfLearningSound.CLICK );
+					game.setScreen(new Menu(game));
+				}   
+				return true;
+			}
+		});
 
 	}
 

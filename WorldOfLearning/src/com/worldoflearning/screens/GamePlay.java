@@ -5,12 +5,14 @@ import java.util.Locale;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -61,10 +63,8 @@ public class GamePlay extends AbstractScreen {
 	public boolean isPaused;
 	
 	
-	public GamePlay(WorldOfLearning game, int targetWorldId, int targetLevelId) {
+	public GamePlay(final WorldOfLearning game, int targetWorldId, int targetLevelId) {
 		super(game);
-		//back key shouldn't exit app
-        //Gdx.input.setCatchBackKey(true);
 		this.targetWorldId = targetWorldId;
 		this.targetLevelId = targetLevelId;
 		this.profileId = targetWorldId*4+targetLevelId;
@@ -108,9 +108,20 @@ public class GamePlay extends AbstractScreen {
 		countDown = getFont();
 		
 		// set up game input processor to catch back button
-		//Gdx.input.setCatchBackKey(true);
-		//GameInputProcessor  inputProcessor = new GameInputProcessor(game, targetWorldId);
-		//Gdx.input.setInputProcessor(inputProcessor);
+		Gdx.input.setCatchBackKey(true);
+		stage.addListener(new InputListener(){
+			@Override
+			public boolean keyDown(InputEvent event, int keyCode){
+				if (keyCode == (Keys.BACK) || keyCode == (Keys.ESCAPE)){
+					game.getSoundManager().play( WorldOfLearningSound.CLICK );
+					if (!isPaused) {
+						isPaused = true;
+						timer.pause();
+					}
+				}   
+				return true;
+			}
+		});
 	}
 	
 	public void addTile1Listener(){
@@ -294,7 +305,7 @@ public class GamePlay extends AbstractScreen {
 						if (!isPaused) {
 							isPaused = true;
 							timer.pause();
-						} 
+						}
 					}
 				});
 				leftTable.add(pauseButton).size(80,20);
