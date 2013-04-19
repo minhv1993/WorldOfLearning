@@ -46,7 +46,7 @@ public class Tutorial extends AbstractScreen {
 		super.show();
 
 		game.getMusicManager().play(WorldOfLearningMusic.TUTORIAL);
-		AtlasRegion splashRegion = getAtlas().findRegion(game.LEVEL_SCREEN);
+		AtlasRegion splashRegion = getAtlas().findRegion(game.GAME_SCREEN);
 		Drawable splashDrawable = new TextureRegionDrawable( splashRegion );
 		background = new Image( splashDrawable, Scaling.stretch );
 		background.setFillParent( true );
