@@ -21,7 +21,7 @@ public class Credits extends AbstractScreen {
 								"Numbers - horse50, OpenClipArt.org\n Facial expressions - kara 78,\n	frank jamieson,\n" +
 								"	thad pucket\n	hector gomex,\n	nemo,\n	rob,\n	ocal\n	andrea\n	(Openclipart.org)\n" +
 								"\n\n\nMusic:\n Menu, Levels, spalsh - Fillipo Vicarelli, PlayOnLoop.com\nMenu sound-blue2107, Freesound.org\n" +
-								"Confirmation cue - Bertref, Freesound.org\nRejection cue - Autistic Lucario, Freesound.org\n\n" +
+								"Confirmation cue - Bertref, Freesound.org\nRejection cue - Autistic Lucario, Freesound.org\n\n\n\n" +
 								"Backgrounds:\nSeanPhan";
 
 	public Credits(WorldOfLearning game) {
