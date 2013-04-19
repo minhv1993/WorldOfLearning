@@ -2,12 +2,15 @@ package com.worldoflearning.screens;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
@@ -28,7 +31,7 @@ public class Tutorial extends AbstractScreen {
 	private Table table;
 	private Table temp;
 	private int counter;
-	
+
 	public Tutorial(WorldOfLearning game, int targetWorldId, int targetLevelId) {
 		super(game);
 
@@ -38,147 +41,150 @@ public class Tutorial extends AbstractScreen {
 		levelItems = level.getItems();
 		counter = 0;
 	}
-	
-	
-	
+
+
+
 	@Override
 	public void show(){
 		super.show();
-		
+
 		game.getMusicManager().play(WorldOfLearningMusic.TUTORIAL);
 		AtlasRegion splashRegion = getAtlas().findRegion(game.LEVEL_SCREEN);
-        Drawable splashDrawable = new TextureRegionDrawable( splashRegion );
-        background = new Image( splashDrawable, Scaling.stretch );
-        background.setFillParent( true );
-        stage.addActor( background );
-		
-        table = super.getTable();
-        table.columnDefaults(0).padRight(10);
-        table.columnDefaults(1).padLeft(10);
-        table.add( " " ).spaceBottom( 300 );
-        table.row();
-		
-        TextButton yesButton = new TextButton( "Teach Me!", getSkin() );
-        yesButton.addListener( new DefaultActorListener() {
-            @Override
-            public void touchUp(
-                InputEvent event,
-                float x,
-                float y,
-                int pointer,
-                int button )
-            {
-                super.touchUp( event, x, y, pointer, button );
-                game.getSoundManager().play( WorldOfLearningSound.CLICK );
-                table.clear();
-                table = setTutorial(table, counter);
+		Drawable splashDrawable = new TextureRegionDrawable( splashRegion );
+		background = new Image( splashDrawable, Scaling.stretch );
+		background.setFillParent( true );
+		stage.addActor( background );
 
-            }
-        } );
-        table.add( yesButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).padRight(10);
-		
-		
-        TextButton noButton = new TextButton( "Skip", getSkin() );
-        noButton.addListener( new DefaultActorListener() {
-            @Override
-            public void touchUp(
-                InputEvent event,
-                float x,
-                float y,
-                int pointer,
-                int button )
-            {
-                super.touchUp( event, x, y, pointer, button );
-                game.getSoundManager().play( WorldOfLearningSound.CLICK );
-                game.setScreen( new GamePlay ( game, targetWorldId, targetLevelId ) );
-                //SKIP THE TUTORIAL
-                
-            }
-        } );
-        table.add( noButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).padRight(10);
+		table = super.getTable();
+		table.columnDefaults(0).padRight(10);
+		table.columnDefaults(1).padLeft(10);
+		table.add( " " ).spaceBottom( 300 );
+		table.row();
+
+		TextButton yesButton = new TextButton( "Teach Me!", getSkin() );
+		yesButton.addListener( new DefaultActorListener() {
+			@Override
+			public void touchUp(
+					InputEvent event,
+					float x,
+					float y,
+					int pointer,
+					int button )
+			{
+				super.touchUp( event, x, y, pointer, button );
+				game.getSoundManager().play( WorldOfLearningSound.CLICK );
+				table.clear();
+				table = setTutorial(table, counter);
+
+			}
+		} );
+		table.add( yesButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).padRight(10);
+
+
+		TextButton noButton = new TextButton( "Skip", getSkin() );
+		noButton.addListener( new DefaultActorListener() {
+			@Override
+			public void touchUp(
+					InputEvent event,
+					float x,
+					float y,
+					int pointer,
+					int button )
+			{
+				super.touchUp( event, x, y, pointer, button );
+				game.getSoundManager().play( WorldOfLearningSound.CLICK );
+				game.setScreen( new GamePlay ( game, targetWorldId, targetLevelId ) );
+				//SKIP THE TUTORIAL
+
+			}
+		} );
+		table.add( noButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).padRight(10);
 	}
-	
-	
+
+
 	private Table setTutorial(Table table, int i) {
 		temp = table;
-		
-		
+
+
 		temp.add(new ImageButton( new TextureRegionDrawable (getAtlas().findRegion(levelItems.get(i).getDirectory())))).fillX();
 		temp.add(levelItems.get(i).getName());
 		temp.row();
+		BitmapFont name = new BitmapFont();
+
+
 		final TextButton yesButton = new TextButton( "NEXT!", getSkin() );
-        yesButton.addListener( new DefaultActorListener() {
-            @Override
-            public void touchUp(
-                InputEvent event,
-                float x,
-                float y,
-                int pointer,
-                int button )
-            {
-                super.touchUp( event, x, y, pointer, button );
-                game.getSoundManager().play( WorldOfLearningSound.CLICK );
-                //temp.add(new ImageButton( new TextureRegionDrawable (getAtlas().findRegion(levelItems.get(0).getDirectory())))).center();
-               counter++;
-               temp.clear();
-               //if try to access something no in the array, then end tutorial
-               if (counter == levelItems.size()-1) {
-            	   //end tutorial
-            	   endTutorial(temp);  
-               }else{
-            	   setTutorial(temp, counter);
-               }
-            }
-        } );
-        table.add( yesButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).padRight(10);
-		
-		
-        TextButton noButton = new TextButton( "Skip", getSkin() );
-        noButton.addListener( new DefaultActorListener() {
-            @Override
-            public void touchUp(
-                InputEvent event,
-                float x,
-                float y,
-                int pointer,
-                int button )
-            {
-                super.touchUp( event, x, y, pointer, button );
-                game.getSoundManager().play( WorldOfLearningSound.CLICK );
-                game.setScreen( new GamePlay ( game, targetWorldId, targetLevelId ) );
-                //SKIP THE TUTORIAL
-                
-            }
-        } );
-        table.add( noButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).padRight(10);
-		
-		
+		yesButton.addListener( new DefaultActorListener() {
+			@Override
+			public void touchUp(
+					InputEvent event,
+					float x,
+					float y,
+					int pointer,
+					int button )
+			{
+				super.touchUp( event, x, y, pointer, button );
+				game.getSoundManager().play( WorldOfLearningSound.CLICK );
+				//temp.add(new ImageButton( new TextureRegionDrawable (getAtlas().findRegion(levelItems.get(0).getDirectory())))).center();
+				counter++;
+				temp.clear();
+				//if try to access something no in the array, then end tutorial
+				if (counter == levelItems.size()-1) {
+					//end tutorial
+					endTutorial(temp);  
+				}else{
+					setTutorial(temp, counter);
+				}
+			}
+		} );
+		table.add( yesButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).pad(10);
+
+
+		TextButton noButton = new TextButton( "Skip", getSkin() );
+		noButton.addListener( new DefaultActorListener() {
+			@Override
+			public void touchUp(
+					InputEvent event,
+					float x,
+					float y,
+					int pointer,
+					int button )
+			{
+				super.touchUp( event, x, y, pointer, button );
+				game.getSoundManager().play( WorldOfLearningSound.CLICK );
+				game.setScreen( new GamePlay ( game, targetWorldId, targetLevelId ) );
+				//SKIP THE TUTORIAL
+
+			}
+		} );
+		table.add( noButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).pad(10);
+
+
 		return temp;
 	}
 	private Table endTutorial (Table table) {
 		table = this.table;
 		table.defaults().spaceBottom( 30 );
-        TextButton backButton = new TextButton( "Continue" , getSkin() );
-        backButton.addListener( new DefaultActorListener() {
-            @Override
-            public void touchUp(
-                InputEvent event,
-                float x,
-                float y,
-                int pointer,
-                int button )
-            {
-                super.touchUp( event, x, y, pointer, button );
-                game.getSoundManager().play( WorldOfLearningSound.CLICK );
-                game.setScreen( new GamePlay ( game, targetWorldId, targetLevelId ) );
-            }
-        } );
-        table.row();
-        table.add( backButton ).size( 250, 60 );
-		
+		TextButton backButton = new TextButton( "Continue" , getSkin() );
+		backButton.addListener( new DefaultActorListener() {
+			@Override
+			public void touchUp(
+					InputEvent event,
+					float x,
+					float y,
+					int pointer,
+					int button )
+			{
+				super.touchUp( event, x, y, pointer, button );
+				game.getSoundManager().play( WorldOfLearningSound.CLICK );
+				game.setScreen( new GamePlay ( game, targetWorldId, targetLevelId ) );
+			}
+		} );
+		table.row();
+		table.add( backButton ).size( 250, 60 );
+
 		return table;
-		
+
 	}
-	
-	
+
+
 }
