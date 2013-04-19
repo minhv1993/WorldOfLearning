@@ -20,7 +20,7 @@ public class LevelManager
     								"red-triangle", "yellow-circle", "yellow-pentagon", "yellow-three", "yellow-triangle", "yellow-two"};
     private final String[] w2l1 = {};
     private final String[] w2l2 = {"turle", "seal", "owl", "mouse", "hippo", "frog","fish", "elephant", "dog", "cat"};
-    private final String[] w2l3 = {};
+    private final String[] w2l3 = {"sleepy", "sick", "scared", "sad", "happy", "embarassed", "confused", "angry"};
     private final String[] w2l4 = {};
     /**
      * Creates the level manager.
