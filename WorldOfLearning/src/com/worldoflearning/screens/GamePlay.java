@@ -63,6 +63,9 @@ public class GamePlay extends AbstractScreen {
 		super(game);
 		//back key shouldn't exit app
         //Gdx.input.setCatchBackKey(true);
+		this.targetWorldId = targetWorldId;
+		this.targetLevelId = targetLevelId;
+		
 		rand = new Random();
 		
 		profile = game.getProfileManager().retrieveProfile();
