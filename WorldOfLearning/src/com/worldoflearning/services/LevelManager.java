@@ -12,7 +12,13 @@ public class LevelManager
 {
     private final List<Level> levels;
     private final String[] w1l1= {"circle", "hexagon", "oval", "pentagon", "semi-circle", "square", "trapezoid", "triangle"};
-
+    private final String[] w1l2 = {"nine", "eight", "seven", "six", "five", "four", "three", "two", "one", "zero"};
+    //private final String[] w1l3 =
+    //private final String[] w1l4 =
+    //private final String[] w2l1 =
+    private final String[] w2l2 = {"turle", "seal", "owl", "mouse", "hippo", "frog","fish", "elephant", "dog", "cat"};
+    //private final String[] w2l3 =
+    //private final String[] w2l4 =
     /**
      * Creates the level manager.
      */
