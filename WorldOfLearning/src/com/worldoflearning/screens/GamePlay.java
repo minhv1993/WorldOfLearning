@@ -36,6 +36,7 @@ public class GamePlay extends AbstractScreen {
 	
 	private int targetWorldId;
 	private int targetLevelId;
+	private int profileId;
 	public int scores;
 	private Label volumeValue;
 	
@@ -244,18 +245,18 @@ public class GamePlay extends AbstractScreen {
 			if(timer.getTimeRemainingInSeconds() > 0){
 				table.columnDefaults(0).padLeft(5);
 				table.columnDefaults(6).padRight(5);
-
 				for(int y = 0; y < 3; y++){
 					table.row();
 					for(int x = 0; x < 4; x++){
 						if(x == 0){
 							if(y == 0){
 
-								table.add( Integer.toString(timer.getTimeRemainingInSeconds())).fillX().colspan(2);
-								table.add( Integer.toString(scores)).fillX().colspan(2).right();
+								table.add("Time: " + timer.getTimeRemainingInSeconds()).fillX().colspan(2);
+								table.add("W "+(targetWorldId+1)+" - Lvl "+(targetLevelId+1)).fillX();
+								table.add("Score: "+scores).fillX();
 							} else if (y == 1){
 								table.add(toMatch).fillX().size(100,100).colspan(2).padRight(20);
-							} else if (y == 2){
+							} else {
 								Table smallTable = new Table(getSkin());
 								smallTable.columnDefaults(0).padRight(5);
 								smallTable.columnDefaults(1).padRight(5);
@@ -304,13 +305,13 @@ public class GamePlay extends AbstractScreen {
 								if(y == 1){
 									if(x == 2){
 										table.add(tile1).fillX().size(100, 100).space(2);
-									}else if (x == 3){
+									}else {
 										table.add(tile2).fillX().size(100, 100).space(2);
 									}
 								} else if (y == 2){
 									if(x == 2){
 										table.add(tile3).fillX().size(100, 100).space(2);
-									}else if (x == 3){
+									}else {
 										table.add(tile4).fillX().size(100, 100).space(2);
 									}
 								}
@@ -327,13 +328,16 @@ public class GamePlay extends AbstractScreen {
 				table.row();
 
 				table.add("High Score:").fillX().left();
-				table.add("189299").fillX().right();
+				table.add(profile.notifyScore(profileId, scores)?Integer.toString(scores):Integer.toString(profile.getHighScore(profileId))).fillX().right();
 				table.row();
 
 				table.add("Your Score:").fillX().left();
-				table.add("12312").fillX().right();
+				table.add(Integer.toString(scores)).fillX().right();
 				table.row();
-
+				
+				final int nextLevel = (targetLevelId==3)?((targetWorldId==1)?3:0):(targetLevelId+1);
+				final int nextWorld = (targetWorldId==1)?1:((targetLevelId==3)?1:0);
+				
 				TextButton levelsButton = new TextButton( "Levels Select", getSkin() );
 				levelsButton.addListener(new DefaultActorListener(){
 					@Override
@@ -350,7 +354,7 @@ public class GamePlay extends AbstractScreen {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
 						super.touchUp( event, x, y, pointer, button );
 						game.getSoundManager().play( WorldOfLearningSound.CLICK );
-						game.setScreen(new Tutorial(game, (targetLevelId==3)?1:targetWorldId, (targetLevelId==3)?(targetWorldId==1)?3:0:targetLevelId+1));
+						game.setScreen(new Tutorial(game, nextWorld, nextLevel));
 						
 					}
 				});

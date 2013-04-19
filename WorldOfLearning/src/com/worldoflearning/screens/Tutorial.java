@@ -20,8 +20,6 @@ import com.worldoflearning.utils.DefaultActorListener;
 
 
 public class Tutorial extends AbstractScreen {
-
-	
 	private int targetWorldId;
 	private int targetLevelId;
 	private Image background;
@@ -34,8 +32,8 @@ public class Tutorial extends AbstractScreen {
 	public Tutorial(WorldOfLearning game, int targetWorldId, int targetLevelId) {
 		super(game);
 
-		targetWorldId = this.targetWorldId;
-		targetLevelId = this.targetLevelId;
+		this.targetWorldId = targetWorldId;
+		this.targetLevelId = targetLevelId ;
 		level = game.getLevelManager().findLevelById(targetWorldId, targetLevelId);
 		levelItems = level.getItems();
 		counter = 0;

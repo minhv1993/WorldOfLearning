@@ -24,6 +24,10 @@ public class Profile implements Serializable {
     {
         highScores = new HashMap<Integer,Integer>();
     }
+    
+    public void setCurrentLevelId(int currentLevelId){
+    	this.currentLevelId = currentLevelId;
+    }
 
     /**
      * Retrieves the ID of the next playable level.
