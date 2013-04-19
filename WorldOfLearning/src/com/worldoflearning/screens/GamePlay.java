@@ -37,6 +37,8 @@ public class GamePlay extends AbstractScreen {
 	public static final int NUM_OF_TILES = 4;
 	public static final int TIME_IN_MILLIS = 31000;
 	public static final int SCORE_QUOTA = 1500;
+	private static final int SCORE_WRONG = -50;
+	private static final int SCORE_RIGHT = 100;
 	
 	private int targetWorldId;
 	private int targetLevelId;
@@ -133,10 +135,10 @@ public class GamePlay extends AbstractScreen {
 					if (isCorrect) {
 						game.getSoundManager().play(
 								WorldOfLearningSound.CORRECT);
-						updateTiles(100);
+						updateTiles(SCORE_RIGHT);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						updateTiles(0);
+						updateTiles(SCORE_WRONG);
 					}
 				}
 			}
@@ -152,10 +154,10 @@ public class GamePlay extends AbstractScreen {
 					if (isCorrect) {
 						game.getSoundManager().play(
 								WorldOfLearningSound.CORRECT);
-						updateTiles(100);
+						updateTiles(SCORE_RIGHT);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						updateTiles(0);
+						updateTiles(SCORE_WRONG);
 					}
 				}
 			}
@@ -171,10 +173,10 @@ public class GamePlay extends AbstractScreen {
 					if (isCorrect) {
 						game.getSoundManager().play(
 								WorldOfLearningSound.CORRECT);
-						updateTiles(100);
+						updateTiles(SCORE_RIGHT);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						updateTiles(0);
+						updateTiles(SCORE_WRONG);
 					}
 				}
 			}
@@ -190,10 +192,10 @@ public class GamePlay extends AbstractScreen {
 					if (isCorrect) {
 						game.getSoundManager().play(
 								WorldOfLearningSound.CORRECT);
-						updateTiles(100);
+						updateTiles(SCORE_RIGHT);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						updateTiles(0);
+						updateTiles(SCORE_WRONG);
 					}
 				}
 			}
@@ -202,6 +204,8 @@ public class GamePlay extends AbstractScreen {
 	
 	public void updateTiles(int score){
 		scores += score;
+		if(scores < 0)
+			scores = 0;
 		if(score > 0){
 			for(int i = 0; i < NUM_OF_TILES; i++){
 				boolean dupe = true;
