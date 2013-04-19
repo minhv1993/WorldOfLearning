@@ -125,7 +125,7 @@ public class GamePlay extends AbstractScreen {
 						updateTiles(100);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						updateTiles(-50);
+						updateTiles(0);
 					}
 				}
 			}
@@ -144,7 +144,7 @@ public class GamePlay extends AbstractScreen {
 						updateTiles(100);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						updateTiles(-50);
+						updateTiles(0);
 					}
 				}
 			}
@@ -163,7 +163,7 @@ public class GamePlay extends AbstractScreen {
 						updateTiles(100);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						updateTiles(-50);
+						updateTiles(0);
 					}
 				}
 			}
@@ -182,7 +182,7 @@ public class GamePlay extends AbstractScreen {
 						updateTiles(100);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						updateTiles(-50);
+						updateTiles(0);
 					}
 				}
 			}
@@ -192,9 +192,20 @@ public class GamePlay extends AbstractScreen {
 	public void updateTiles(int score){
 		scores += score;
 		if(score > 0){
-			for(int i = 0; i < GamePlay.NUM_OF_TILES; i++){
-				Item temp = levelItems.get(rand.nextInt(levelItems.size()));
-				itemTiles[i] = temp;
+			for(int i = 0; i < NUM_OF_TILES; i++){
+				boolean dupe = true;
+				while(dupe){
+					dupe = false;
+					Item tempItem = levelItems.get(rand.nextInt(levelItems.size()));
+					for(int j = 0; j < NUM_OF_TILES; j++){
+						if(itemTiles[j] != null){
+							if(itemTiles[j].getName().equals(tempItem.getName())){
+								dupe = true;
+							}
+						}
+					}
+					itemTiles[i] = tempItem;
+				}
 			}
 			Item itemTile = itemTiles[0];
 			tile1 = new ImageButton(new TextureRegionDrawable(getAtlas().findRegion(itemTile.getDirectory())));
@@ -220,8 +231,20 @@ public class GamePlay extends AbstractScreen {
 	}
 	
 	public void setUpTiles(){
-		for(int i = 0; i < 4; i++){
-			itemTiles[i] = levelItems.get(rand.nextInt(levelItems.size()));
+		for(int i = 0; i < NUM_OF_TILES; i++){
+			boolean dupe = true;
+			while(dupe){
+				dupe = false;
+				Item tempItem = levelItems.get(rand.nextInt(levelItems.size()));
+				for(int j = 0; j < NUM_OF_TILES; j++){
+					if(itemTiles[j] != null){
+						if(itemTiles[j].getName().equals(tempItem.getName())){
+							dupe = true;
+						}
+					}
+				}
+				itemTiles[i] = tempItem;
+			}
 		}
 	}
 	
