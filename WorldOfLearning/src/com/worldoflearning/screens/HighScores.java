@@ -164,6 +164,6 @@ public class HighScores extends AbstractScreen {
             }
         } );
         table.row();
-        table.add( backButton ).size( 300, 30 ).colspan( 4 ).padTop(20);
+        table.add( backButton ).size( 200, 50 ).colspan( 4 ).padTop(20);
 	}
 }

@@ -133,7 +133,7 @@ public class Options extends AbstractScreen {
             }
         } );
         table.row();
-        table.add( backButton ).size( 250, 60 ).colspan( 3 );
+        table.add( backButton ).size( 200, 50 ).colspan( 3 );
 	}
 	
 	/**
