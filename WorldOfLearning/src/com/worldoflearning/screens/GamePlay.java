@@ -119,8 +119,9 @@ public class GamePlay extends AbstractScreen {
 					if (!isPaused) {
 						isPaused = true;
 						timer.pause();
+						show();
 					}
-				}   
+				}
 				return true;
 			}
 		});
