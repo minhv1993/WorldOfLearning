@@ -2,15 +2,12 @@ package com.worldoflearning.screens;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
@@ -109,9 +106,7 @@ public class Tutorial extends AbstractScreen {
 		temp.add(new ImageButton( new TextureRegionDrawable (getAtlas().findRegion(levelItems.get(i).getDirectory())))).fillX();
 		temp.add(levelItems.get(i).getName());
 		temp.row();
-		BitmapFont name = new BitmapFont();
-
-
+		
 		final TextButton yesButton = new TextButton( "NEXT!", getSkin() );
 		yesButton.addListener( new DefaultActorListener() {
 			@Override

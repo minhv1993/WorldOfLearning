@@ -2,9 +2,16 @@ package com.worldoflearning.screens;
 
 import java.util.Map;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Scaling;
 import com.worldoflearning.WorldOfLearning;
 import com.worldoflearning.domain.Profile;
 import com.worldoflearning.services.SoundManager.WorldOfLearningSound;
@@ -20,18 +27,41 @@ public class HighScores extends AbstractScreen {
 
 	public void show() {
 		super.show();
-		Table table = super.getTable();
-		table.columnDefaults(2).padRight(20);
-		table.columnDefaults(3).padLeft(20);
+        // retrieve the splash image's region from the atlas
+        AtlasRegion splashRegion = getAtlas().findRegion(game.MENU_BACKGROUND);
+        Drawable splashDrawable = new TextureRegionDrawable( splashRegion );
+        Image background = new Image( splashDrawable, Scaling.stretch );
+        background.setFillParent( true );
+
+        // and finally we add the actor to the stage
+        stage.addActor( background );
 		
-		table.add("High Scores").fillX().colspan(4);
+		Table table = super.getTable();
+		table.setFillParent(true);
+		table.columnDefaults(1).padRight(20);
+		table.columnDefaults(2).padLeft(20);
+
+		Label highscoreslabel = new Label("High Scores", getSkin());
+		highscoreslabel.setAlignment(Align.center);
+		highscoreslabel.setWrap(true);
+		highscoreslabel.setScale(3);
+		table.add(highscoreslabel).fillX().colspan(4);
 		table.row();
+		
+		Label world1label = new Label("World 2", getSkin());
+		world1label.setAlignment(Align.center);
+		world1label.setWrap(true);
+		world1label.setScale(2);
+		Label world2label = new Label("World 1", getSkin());
+		world2label.setAlignment(Align.center);
+		world2label.setWrap(true);
+		world2label.setScale(2);
+		table.add(world1label ).fillX().colspan(2);
+		table.add(world2label).fillX().colspan(2);
+		table.row();
+		
 		
 		Map<Integer,Integer> highscores = profile.getHighScores();
-		
-		table.add("World 1").fillX().colspan(2);
-		table.add("World 2").fillX().colspan(2);
-		table.row();
 		
 		int size = highscores.size();
 		switch(size){
@@ -118,7 +148,7 @@ public class HighScores extends AbstractScreen {
 			break;
 		}
 		
-        TextButton backButton = new TextButton( "Back to main menu", getSkin() );
+        TextButton backButton = new TextButton( "Main Menu", getSkin() );
         backButton.addListener( new DefaultActorListener() {
             @Override
             public void touchUp(
@@ -134,6 +164,6 @@ public class HighScores extends AbstractScreen {
             }
         } );
         table.row();
-        table.add( backButton ).size( 300, 30 ).colspan( 2 ).padTop(20);
+        table.add( backButton ).size( 300, 30 ).colspan( 4 ).padTop(20);
 	}
 }

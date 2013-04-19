@@ -1,17 +1,24 @@
 package com.worldoflearning.screens;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Scaling;
 import com.worldoflearning.WorldOfLearning;
+import com.worldoflearning.services.SoundManager.WorldOfLearningSound;
+import com.worldoflearning.utils.DefaultActorListener;
 
 public class Credits extends AbstractScreen {
+	private static final String reallyLongString = "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n"
+			+ "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n"
+			+ "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n";
 
 	public Credits(WorldOfLearning game) {
 		super(game);
@@ -21,69 +28,55 @@ public class Credits extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
-		ScrollTest temp = new ScrollTest();
-	}
+        // retrieve the splash image's region from the atlas
+        AtlasRegion splashRegion = getAtlas().findRegion(game.MENU_BACKGROUND);
+        Drawable splashDrawable = new TextureRegionDrawable( splashRegion );
+        Image background = new Image( splashDrawable, Scaling.stretch );
+        background.setFillParent( true );
 
-	public class ScrollTest implements ApplicationListener {
-		private Stage stage;
+        // and finally we add the actor to the stage
+        stage.addActor( background );
+        
+		Label text = new Label(reallyLongString, getSkin());
+		text.setAlignment(Align.center);
+		text.setWrap(true);
+		Label text2 = new Label("This is a short string!", getSkin());
+		text2.setAlignment(Align.center);
+		text2.setWrap(true);
+		Label text3 = new Label(reallyLongString, getSkin());
+		text3.setAlignment(Align.center);
+		text3.setWrap(true);
 
-		private static final String reallyLongString = "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n"
-				+ "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n"
-				+ "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n";
+		Table scrollTable = new Table();
+		scrollTable.add(text);
+		scrollTable.row();
+		scrollTable.add(text2);
+		scrollTable.row();
+		scrollTable.add(text3);
 
-		@Override
-		public void create() {
-			this.stage = new Stage();
-			Gdx.input.setInputProcessor(this.stage);
-			final Skin skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+		ScrollPane scroller = new ScrollPane(scrollTable);
 
-			final Label text = new Label(reallyLongString, skin);
-			text.setAlignment(Align.center);
-			text.setWrap(true);
-			final Label text2 = new Label("This is a short string!", skin);
-			text2.setAlignment(Align.center);
-			text2.setWrap(true);
-			final Label text3 = new Label(reallyLongString, skin);
-			text3.setAlignment(Align.center);
-			text3.setWrap(true);
+		Table table = getTable();
+		table.setFillParent(true);
+		table.add(scroller).fill().expand().padTop(30);
 
-			final Table scrollTable = new Table();
-			scrollTable.add(text);
-			scrollTable.row();
-			scrollTable.add(text2);
-			scrollTable.row();
-			scrollTable.add(text3);
-
-			final ScrollPane scroller = new ScrollPane(scrollTable);
-
-			final Table table = new Table();
-			table.setFillParent(true);
-			table.add(scroller).fill().expand();
-
-			this.stage.addActor(table);
-		}
-
-		@Override
-		public void render() {
-			this.stage.act();
-			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-			this.stage.draw();
-		}
-
-		@Override
-		public void resize(final int width, final int height) {
-		}
-
-		@Override
-		public void pause() {
-		}
-
-		@Override
-		public void resume() {
-		}
-
-		@Override
-		public void dispose() {
-		}
+        TextButton backButton = new TextButton( "Main Menu", getSkin() );
+        backButton.addListener( new DefaultActorListener() {
+            @Override
+            public void touchUp(
+                InputEvent event,
+                float x,
+                float y,
+                int pointer,
+                int button )
+            {
+                super.touchUp( event, x, y, pointer, button );
+                game.getSoundManager().play( WorldOfLearningSound.CLICK );
+                game.setScreen( new Menu( game ) );
+            }
+        } );
+        table.row();
+        table.add( backButton ).size( 200, 40 ).pad(20);
+		stage.addActor(table);
 	}
 }

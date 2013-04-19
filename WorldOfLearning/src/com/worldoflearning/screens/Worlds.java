@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.worldoflearning.WorldOfLearning;
 import com.worldoflearning.domain.Profile;
+import com.worldoflearning.services.MusicManager.WorldOfLearningMusic;
 import com.worldoflearning.services.SoundManager.WorldOfLearningSound;
 import com.worldoflearning.utils.DefaultActorListener;
 
@@ -43,7 +44,10 @@ public class Worlds extends AbstractScreen {
 
         // and finally we add the actor to the stage
         stage.addActor( background );
-        
+
+        // play level music
+		game.getMusicManager().play(WorldOfLearningMusic.MENU);
+
         // retrieve the table's layout
         profile = game.getProfileManager().retrieveProfile();
 		

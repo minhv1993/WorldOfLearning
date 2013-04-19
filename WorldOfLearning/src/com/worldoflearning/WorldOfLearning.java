@@ -29,6 +29,7 @@ public class WorldOfLearning extends Game {
     public final String LEVEL_SCREEN = "level-screen/level-screen";
     public final String WORLD_SCREEEN = "world-screen/world-screen";
 	public final String GAME_SCREEN = "game-screen/game-screen";
+	public final String MENU_BACKGROUND = "menu-screen/menu-background";
     
     // a libgdx helper class that logs the current FPS each second
     private GameLogger gameLogger;

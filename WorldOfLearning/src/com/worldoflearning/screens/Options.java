@@ -33,7 +33,7 @@ public class Options extends AbstractScreen {
 		super.show();
         
         // retrieve the splash image's region from the atlas
-        AtlasRegion splashRegion = getAtlas().findRegion(game.SPLASH_SCREEN);
+        AtlasRegion splashRegion = getAtlas().findRegion(game.MENU_BACKGROUND);
         Drawable splashDrawable = new TextureRegionDrawable( splashRegion );
 
         // here we create the splash image actor; its size is set when the
@@ -41,6 +41,7 @@ public class Options extends AbstractScreen {
         background = new Image( splashDrawable, Scaling.stretch );
         background.setFillParent( true );
 
+        stage.addActor(background);
 		
 		// Retrieve the default table actor
 		Table table = super.getTable();
