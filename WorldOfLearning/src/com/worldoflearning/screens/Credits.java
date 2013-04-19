@@ -16,9 +16,13 @@ import com.worldoflearning.services.SoundManager.WorldOfLearningSound;
 import com.worldoflearning.utils.DefaultActorListener;
 
 public class Credits extends AbstractScreen {
-	private static final String reallyLongString = "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n"
-			+ "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n"
-			+ "This\nIs\nA\nReally\nLong\nString\nThat\nHas\nLots\nOf\nLines\nAnd\nRepeats.\n";
+	private static final String reallyLongString = "Art:\nOwl - CartoonBoy\nElephant, Seal - ClipArtLord\nFrog - Mathfix\n" +
+								"Dog, Mouse - OCAL\nCat - Ruthirsty\nTurtle, Hippo - WPClipArt\nFish - drunken_duck\n" +
+								"Numbers - horse50, OpenClipArt.org\n Facial expressions - kara 78,\n	frank jamieson,\n" +
+								"	thad pucket\n	hector gomex,\n	nemo,\n	rob,\n	ocal\n	andrea\n	(Openclipart.org)\n" +
+								"\n\n\nMusic:\n Menu, Levels, spalsh - Fillipo Vicarelli, PlayOnLoop.com\nMenu sound-blue2107, Freesound.org\n" +
+								"Confirmation cue - Bertref, Freesound.org\nRejection cue - Autistic Lucario, Freesound.org\n\n" +
+								"Backgrounds:\nSeanPhan";
 
 	public Credits(WorldOfLearning game) {
 		super(game);
@@ -40,19 +44,19 @@ public class Credits extends AbstractScreen {
 		Label text = new Label(reallyLongString, getSkin());
 		text.setAlignment(Align.center);
 		text.setWrap(true);
-		Label text2 = new Label("This is a short string!", getSkin());
+		/*Label text2 = new Label("This is a short string!", getSkin());
 		text2.setAlignment(Align.center);
 		text2.setWrap(true);
 		Label text3 = new Label(reallyLongString, getSkin());
 		text3.setAlignment(Align.center);
-		text3.setWrap(true);
+		text3.setWrap(true);*/
 
 		Table scrollTable = new Table();
 		scrollTable.add(text);
 		scrollTable.row();
-		scrollTable.add(text2);
+		//scrollTable.add(text2);
 		scrollTable.row();
-		scrollTable.add(text3);
+		//scrollTable.add(text3);
 
 		ScrollPane scroller = new ScrollPane(scrollTable);
 
