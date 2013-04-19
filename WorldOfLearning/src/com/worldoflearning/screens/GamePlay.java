@@ -264,7 +264,7 @@ public class GamePlay extends AbstractScreen {
 								smallTable.columnDefaults(1).padRight(5);
 								smallTable.row();
 
-								smallTable.add(toMatch.getName()).fillX().colspan(2).center().padBottom(30).padLeft(35);
+								smallTable.add(toMatch.getName()).fillX().center().padBottom(30);
 								smallTable.row();
 								final TextButton pauseButton = new TextButton( "Pause" , getSkin() );
 								pauseButton.addListener( new DefaultActorListener() {
@@ -291,15 +291,6 @@ public class GamePlay extends AbstractScreen {
 								} );
 
 								smallTable.add(pauseButton).fillX();
-								TextButton optionButton = new TextButton( "Option", getSkin());
-								optionButton.addListener( new DefaultActorListener() {
-									@Override
-									public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
-										super.touchUp( event, x, y, pointer, button );
-										game.getSoundManager().play( WorldOfLearningSound.CLICK );
-									}
-								} );
-								smallTable.add(optionButton).fillX();
 								table.add(smallTable).fillX().colspan(2).padRight(20);
 							}
 						}else if (x >1){
@@ -450,7 +441,19 @@ public class GamePlay extends AbstractScreen {
 	            }
 	        } );
 	        table.row();
-	        table.add( backButton ).size( 150, 30 ).colspan( 3 ).padTop(30);
+	        table.add( backButton ).size( 150, 30 ).fillX().padTop(30);
+	        
+	        TextButton menuButton = new TextButton( "Return to Level Select", getSkin() );
+	        menuButton.addListener( new DefaultActorListener() {
+	            @Override
+	            public void touchUp(InputEvent event, float x, float y, int pointer, int button ) {
+	                super.touchUp( event, x, y, pointer, button );
+	                game.getSoundManager().play( WorldOfLearningSound.CLICK );
+	                game.setScreen( new Levels( game , targetWorldId ) );
+	            }
+	        } );
+	        table.add( menuButton ).size( 180, 30 ).fillX().padTop(30);
+	        table.row();
 		}
 		stage.addActor(table);
 	}
