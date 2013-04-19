@@ -12,34 +12,53 @@ public class LevelManager
 {
     private final List<Level> levels;
     private final String[] w1l1= {"circle", "hexagon", "oval", "pentagon", "semi-circle", "square", "trapezoid", "triangle"};
-
+    private final String[] w1l2 = {"nine", "eight", "seven", "six", "five", "four", "three", "two", "one", "zero"};
+    private final String[] w1l3 = {};
+    private final String[] w1l4 = {};
+    private final String[] w2l1 = {};
+    private final String[] w2l2 = {"turle", "seal", "owl", "mouse", "hippo", "frog","fish", "elephant", "dog", "cat"};
+    private final String[] w2l3 = {};
+    private final String[] w2l4 = {};
     /**
      * Creates the level manager.
      */
     public LevelManager()
     {
-    	
-        /*// create the level 2
-        Level level2 = new Level( 2 );
-        level2.setName( "Episode 3" );
-
-        // create the level 1
-        Level level1 = new Level( 1 );
-        level1.setName( "Episode 2" );
-        level1.setNextLevel( level2 );
-
-        // create the level 0
-        Level level0 = new Level( 0 );
-        level0.setName( "Episode 1" );
-        level0.setNextLevel( level0 );*/
-    	
     	levels = new ArrayList<Level>();
     	
     	for(int world = 0; world < 2; world++){
     		for(int level = 0; level < 4; level++){
     			int id = world*4 + level;
-    			Level l = new Level(id, world, level, "World "+ (world+1)+" - Level "+ (level+1), w1l1);
-    			levels.add(l);
+    			Level l = null;
+    			switch(id){
+    			case 0:
+        			l = new Level(id, world, level, "World "+ (world+1)+" - Level "+ (level+1), w1l1);
+        			break;
+    			case 1:
+        			l = new Level(id, world, level, "World "+ (world+1)+" - Level "+ (level+1), w1l2);
+        			break;
+    			case 2:
+        			l = new Level(id, world, level, "World "+ (world+1)+" - Level "+ (level+1), w1l3);
+        			break;
+    			case 3:
+        			l = new Level(id, world, level, "World "+ (world+1)+" - Level "+ (level+1), w1l4);
+        			break;
+    			case 4:
+        			l = new Level(id, world, level, "World "+ (world+1)+" - Level "+ (level+1), w2l1);
+        			break;
+    			case 5:
+        			l = new Level(id, world, level, "World "+ (world+1)+" - Level "+ (level+1), w2l2);
+        			break;
+    			case 6:
+        			l = new Level(id, world, level, "World "+ (world+1)+" - Level "+ (level+1), w2l3);
+        			break;
+    			case 7:
+        			l = new Level(id, world, level, "World "+ (world+1)+" - Level "+ (level+1), w2l4);
+        			break;
+    			default:
+    			}
+    			if(l != null)
+    				levels.add(l);
     		}
     	}
     }

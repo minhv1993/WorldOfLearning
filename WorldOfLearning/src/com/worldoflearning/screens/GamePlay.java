@@ -1,18 +1,25 @@
 package com.worldoflearning.screens;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.Scaling;
 import com.worldoflearning.WorldOfLearning;
 import com.worldoflearning.domain.GameTimer;
@@ -29,7 +36,9 @@ public class GamePlay extends AbstractScreen {
 	
 	private int targetWorldId;
 	private int targetLevelId;
+	private int profileId;
 	public int scores;
+	private Label volumeValue;
 	
 	private Profile profile;
 	private Level level;
@@ -47,13 +56,17 @@ public class GamePlay extends AbstractScreen {
 	private GameTimer timer;
 	public Random rand;
 	
-	private boolean isPaused;
+	public boolean isPaused;
 	
 	
 	public GamePlay(WorldOfLearning game, int targetWorldId, int targetLevelId) {
 		super(game);
 		//back key shouldn't exit app
         //Gdx.input.setCatchBackKey(true);
+		this.targetWorldId = targetWorldId;
+		this.targetLevelId = targetLevelId;
+		this.profileId = targetWorldId*4+targetLevelId;
+		
 		rand = new Random();
 		
 		profile = game.getProfileManager().retrieveProfile();
@@ -155,7 +168,6 @@ public class GamePlay extends AbstractScreen {
 		});
 	}
 	
-	
 	public void addTile4Listener(){
 		tile4.addListener(new DefaultActorListener(){
 			@Override
@@ -237,18 +249,18 @@ public class GamePlay extends AbstractScreen {
 			if(timer.getTimeRemainingInSeconds() > 0){
 				table.columnDefaults(0).padLeft(5);
 				table.columnDefaults(6).padRight(5);
-
 				for(int y = 0; y < 3; y++){
 					table.row();
 					for(int x = 0; x < 4; x++){
 						if(x == 0){
 							if(y == 0){
 
-								table.add( Integer.toString(timer.getTimeRemainingInSeconds())).fillX().colspan(2);
-								table.add( Integer.toString(scores)).fillX().colspan(2).right();
+								table.add("Time: " + timer.getTimeRemainingInSeconds()).fillX().colspan(2);
+								table.add("W "+(targetWorldId+1)+" - Lvl "+(targetLevelId+1)).fillX();
+								table.add("Score: "+scores).fillX();
 							} else if (y == 1){
 								table.add(toMatch).fillX().size(100,100).colspan(2).padRight(20);
-							} else if (y == 2){
+							} else {
 								Table smallTable = new Table(getSkin());
 								smallTable.columnDefaults(0).padRight(5);
 								smallTable.columnDefaults(1).padRight(5);
@@ -297,13 +309,13 @@ public class GamePlay extends AbstractScreen {
 								if(y == 1){
 									if(x == 2){
 										table.add(tile1).fillX().size(100, 100).space(2);
-									}else if (x == 3){
+									}else {
 										table.add(tile2).fillX().size(100, 100).space(2);
 									}
 								} else if (y == 2){
 									if(x == 2){
 										table.add(tile3).fillX().size(100, 100).space(2);
-									}else if (x == 3){
+									}else {
 										table.add(tile4).fillX().size(100, 100).space(2);
 									}
 								}
@@ -312,6 +324,9 @@ public class GamePlay extends AbstractScreen {
 					}
 				}
 			}else{
+				final int nextLevel = (targetLevelId==3)?((targetWorldId==1)?3:0):(targetLevelId+1);
+				final int nextWorld = (targetWorldId==1)?1:((targetLevelId==3)?1:0);
+				
 				table.columnDefaults(0).padRight(5);
 				table.columnDefaults(1).padLeft(5);
 				table.row();
@@ -320,13 +335,18 @@ public class GamePlay extends AbstractScreen {
 				table.row();
 
 				table.add("High Score:").fillX().left();
-				table.add("189299").fillX().right();
+				table.add(profile.notifyScore(profileId, scores)?Integer.toString(scores):Integer.toString(profile.getHighScore(profileId))).fillX().right();
 				table.row();
 
 				table.add("Your Score:").fillX().left();
-				table.add("12312").fillX().right();
+				table.add(Integer.toString(scores)).fillX().right();
 				table.row();
-
+				
+				if(profile.getCurrentLevelId()<(nextWorld*4+nextLevel))
+					profile.setCurrentLevelId(nextWorld*4+nextLevel);
+				game.getProfileManager().setProfile(profile);
+				game.getProfileManager().persist();
+				
 				TextButton levelsButton = new TextButton( "Levels Select", getSkin() );
 				levelsButton.addListener(new DefaultActorListener(){
 					@Override
@@ -334,17 +354,7 @@ public class GamePlay extends AbstractScreen {
 						super.touchUp( event, x, y, pointer, button );
 						game.getSoundManager().play( WorldOfLearningSound.CLICK );
 						game.setScreen(new Levels(game, targetWorldId));
-						int tempWorldId = (targetLevelId==3)?1:0;
-						int tempLevelId = (targetLevelId==3)?(targetWorldId==1)?3:0:targetLevelId+1;
-						Profile tempProfile = game.getProfileManager().retrieveProfile();
-						if(tempProfile.getCurrentWorldId() <= tempWorldId){
-							if(tempProfile.getCurrentLevelId() <= tempLevelId){
-								tempProfile.setCurrentWorldId(tempWorldId);
-								tempProfile.setCurrentLevelId(tempLevelId);
-								game.getProfileManager().setProfile(tempProfile);
-								game.getProfileManager().persist();
-							}
-						}
+						
 					}
 				});
 				TextButton nextButton = new TextButton("Next Level", getSkin());
@@ -353,25 +363,103 @@ public class GamePlay extends AbstractScreen {
 					public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
 						super.touchUp( event, x, y, pointer, button );
 						game.getSoundManager().play( WorldOfLearningSound.CLICK );
-						game.setScreen(new Tutorial(game, (targetLevelId==3)?1:targetWorldId, (targetLevelId==3)?(targetWorldId==1)?3:0:targetLevelId+1));
-						int tempWorldId = (targetLevelId==3 && targetWorldId==0)?1:0;
-						int tempLevelId = (targetLevelId==3)?(targetWorldId==1)?3:0:targetLevelId+1;
-						Profile tempProfile = game.getProfileManager().retrieveProfile();
-						if(tempProfile.getCurrentWorldId() <= tempWorldId){
-							if(tempProfile.getCurrentLevelId() <= tempLevelId){
-								tempProfile.setCurrentWorldId(tempWorldId);
-								tempProfile.setCurrentLevelId(tempLevelId);
-								game.getProfileManager().setProfile(tempProfile);
-								game.getProfileManager().persist();
-							}
-						}
+						game.setScreen(new Tutorial(game, nextWorld, nextLevel));
+						
 					}
 				});
 				table.add(levelsButton).fillX().size(100, 20).padTop(5);
 				table.add(nextButton).fillX().size(100, 20).padTop(5);
 				table.row();
 			}
+		}else{
+			table.columnDefaults(0).padRight(20);
+			table.add("Paused").colspan(3);
+			
+			// create the labels widgets
+	        final CheckBox soundEffectsCheckbox = new CheckBox( "", getSkin() );
+	        soundEffectsCheckbox.setChecked( game.getPreferencesManager().isSoundEnabled() );
+	        soundEffectsCheckbox.addListener( new ChangeListener() {
+	            @Override
+	            public void changed(
+	                ChangeEvent event,
+	                Actor actor )
+	            {
+	                boolean enabled = soundEffectsCheckbox.isChecked();
+	                game.getPreferencesManager().setSoundEnabled( enabled );
+	                game.getSoundManager().setEnabled( enabled );
+	                game.getSoundManager().play( WorldOfLearningSound.CLICK );
+	            }
+	        } );
+	        table.row();
+	        table.add( "Sound Effects" );
+	        table.add( soundEffectsCheckbox ).colspan( 2 ).left();
+
+	        final CheckBox musicCheckbox = new CheckBox( "", getSkin() );
+	        musicCheckbox.setChecked( game.getPreferencesManager().isMusicEnabled() );
+	        musicCheckbox.addListener( new ChangeListener() {
+	            @Override
+	            public void changed(
+	                ChangeEvent event,
+	                Actor actor )
+	            {
+	                boolean enabled = musicCheckbox.isChecked();
+	                game.getPreferencesManager().setMusicEnabled( enabled );
+	                game.getMusicManager().setEnabled( enabled );
+	                game.getSoundManager().play( WorldOfLearningSound.CLICK );
+
+	                // if the music is now enabled, start playing the menu music
+	                if( enabled ) game.getMusicManager().play( WorldOfLearningMusic.MENU );
+	            }
+	        } );
+	        table.row();
+	        table.add( "Music" );
+	        table.add( musicCheckbox ).colspan( 2 ).left();
+
+	        // range is [0.0,1.0]; step is 0.1f
+	        Slider volumeSlider = new Slider( 0f, 1f, 0.1f, false, getSkin());
+	        volumeSlider.setValue( game.getPreferencesManager().getVolume() );
+	        volumeSlider.addListener( new ChangeListener() {
+	            @Override
+	            public void changed(ChangeEvent event, Actor actor )
+	            {
+	                float value = ( (Slider) actor ).getValue();
+	                game.getPreferencesManager().setVolume( value );
+	                game.getMusicManager().setVolume( value );
+	                game.getSoundManager().setVolume( value );
+	                ((GamePlay) game.getScreen()).updateVolumeLabel();
+	            }
+	        } );
+
+	        // create the volume label
+	        volumeValue = new Label( "", getSkin() );
+	        updateVolumeLabel();
+
+	        // add the volume row
+	        table.row();
+	        table.add( "Volume" );
+	        table.add( volumeSlider );
+	        table.add( volumeValue ).width( 40 );
+
+	        // register the back button
+	        TextButton backButton = new TextButton( "Back to Game", getSkin() );
+	        backButton.addListener( new DefaultActorListener() {
+	            @Override
+	            public void touchUp(InputEvent event, float x, float y, int pointer, int button ) {
+	                super.touchUp( event, x, y, pointer, button );
+	                game.getSoundManager().play( WorldOfLearningSound.CLICK );
+	                ((GamePlay) game.getScreen()).isPaused = false;
+	                ((GamePlay) game.getScreen()).show();
+	            }
+	        } );
+	        table.row();
+	        table.add( backButton ).size( 150, 30 ).colspan( 3 ).padTop(30);
 		}
 		stage.addActor(table);
 	}
+
+    private void updateVolumeLabel()
+    {
+        float volume = ( game.getPreferencesManager().getVolume() * 100 );
+        volumeValue.setText( String.format( Locale.US, "%1.0f%%", volume ) );
+    }
 }

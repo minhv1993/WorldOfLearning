@@ -102,11 +102,11 @@ public class Worlds extends AbstractScreen {
             }
 
             // check the current level ID
-            if( profile.getCurrentWorldId() >= targetWorldId ) {
-                Gdx.app.log( WorldOfLearning.LOG, "Starting world: " + targetWorldId );
+            if( profile.getCurrentLevelId() >= (targetWorldId*4) ) {
+                Gdx.app.log( WorldOfLearning.LOG, "Starting world: " + (targetWorldId+1) );
                 game.setScreen( new Levels( game, targetWorldId ) );
             } else {
-                Gdx.app.log( WorldOfLearning.LOG, "Unable to start world: " + targetWorldId );
+                Gdx.app.log( WorldOfLearning.LOG, "Unable to start world: " + (targetWorldId+1) );
             }
         }
 	}
