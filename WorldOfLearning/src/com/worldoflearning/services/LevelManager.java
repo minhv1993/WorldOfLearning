@@ -19,7 +19,7 @@ public class LevelManager
     								"purple-square", "purple-three", "purple-two", "red-five", "red-hexagon", "red-one", "red-square", "red-three", 
     								"red-triangle", "yellow-circle", "yellow-pentagon", "yellow-three", "yellow-triangle", "yellow-two"};
     private final String[] w2l1 = {"watermelon", "strawberry", "pineapple", "pear", "orange", "cherry", "banana", "apple"};
-    private final String[] w2l2 = {"turle", "seal", "owl", "mouse", "hippo", "frog","fish", "elephant", "dog", "cat"};
+    private final String[] w2l2 = {"turtle", "seal", "owl", "mouse", "hippo", "frog","fish", "elephant", "dog", "cat"};
     private final String[] w2l3 = {"sleepy", "sick", "scared", "sad", "happy", "embarassed", "confused", "angry"};
     private final String[] w2l4 = {"watermelon", "turtle", "strawberry", "sleepy", "sick", "seal", "scared", "sad", "pineapple", "pear", "owl", "orange", "mouse",
     								"hippo", "happy", "frog", "fish", "embarassed", "elephant", "dog", "confused", "cherry", "cat", "banana", "apple", "angry"};
