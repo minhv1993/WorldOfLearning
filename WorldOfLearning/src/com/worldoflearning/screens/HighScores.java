@@ -48,11 +48,11 @@ public class HighScores extends AbstractScreen {
 		table.add(highscoreslabel).fillX().colspan(4);
 		table.row();
 		
-		Label world1label = new Label("World 2", getSkin());
+		Label world1label = new Label("World 1", getSkin());
 		world1label.setAlignment(Align.center);
 		world1label.setWrap(true);
 		world1label.setScale(2);
-		Label world2label = new Label("World 1", getSkin());
+		Label world2label = new Label("World 2", getSkin());
 		world2label.setAlignment(Align.center);
 		world2label.setWrap(true);
 		world2label.setScale(2);
@@ -164,6 +164,6 @@ public class HighScores extends AbstractScreen {
             }
         } );
         table.row();
-        table.add( backButton ).size( 200, 50 ).colspan( 4 ).padTop(20);
+        table.add( backButton ).size( 300, 50 ).colspan( 4 ).padTop(20);
 	}
 }

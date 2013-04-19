@@ -104,7 +104,7 @@ public class Tutorial extends AbstractScreen {
 
 
 		temp.add(new ImageButton( new TextureRegionDrawable (getAtlas().findRegion(levelItems.get(i).getDirectory())))).fillX();
-		temp.add(levelItems.get(i).getName());
+		temp.add(levelItems.get(i).getName()).fillX().size(100);
 		temp.row();
 		
 		final TextButton yesButton = new TextButton( "NEXT!", getSkin() );
@@ -123,7 +123,7 @@ public class Tutorial extends AbstractScreen {
 				counter++;
 				temp.clear();
 				//if try to access something no in the array, then end tutorial
-				if (counter == levelItems.size()-1) {
+				if (counter >= levelItems.size()) {
 					//end tutorial
 					endTutorial(temp);  
 				}else{
@@ -131,7 +131,7 @@ public class Tutorial extends AbstractScreen {
 				}
 			}
 		} );
-		table.add( yesButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).pad(10);
+		table.add( yesButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).pad(20);
 
 
 		TextButton noButton = new TextButton( "Skip", getSkin() );
@@ -151,7 +151,7 @@ public class Tutorial extends AbstractScreen {
 
 			}
 		} );
-		table.add( noButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).pad(10);
+		table.add( noButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).pad(20);
 
 
 		return temp;

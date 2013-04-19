@@ -76,7 +76,7 @@ public class Credits extends AbstractScreen {
             }
         } );
         table.row();
-        table.add( backButton ).size( 200, 50 ).pad(20);
+        table.add( backButton ).size( 300, 50 ).pad(20);
 		stage.addActor(table);
 	}
 }

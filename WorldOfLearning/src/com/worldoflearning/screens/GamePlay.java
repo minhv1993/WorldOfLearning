@@ -118,10 +118,10 @@ public class GamePlay extends AbstractScreen {
 					if (isCorrect) {
 						game.getSoundManager().play(
 								WorldOfLearningSound.CORRECT);
-						((GamePlay) game.getScreen()).updateTiles(10);
+						((GamePlay) game.getScreen()).updateTiles(100);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						((GamePlay) game.getScreen()).updateTiles(-5);
+						((GamePlay) game.getScreen()).updateTiles(-50);
 					}
 				}
 			}
@@ -137,10 +137,10 @@ public class GamePlay extends AbstractScreen {
 					if (isCorrect) {
 						game.getSoundManager().play(
 								WorldOfLearningSound.CORRECT);
-						((GamePlay) game.getScreen()).updateTiles(10);
+						((GamePlay) game.getScreen()).updateTiles(100);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						((GamePlay) game.getScreen()).updateTiles(-5);
+						((GamePlay) game.getScreen()).updateTiles(-50);
 					}
 				}
 			}
@@ -156,10 +156,10 @@ public class GamePlay extends AbstractScreen {
 					if (isCorrect) {
 						game.getSoundManager().play(
 								WorldOfLearningSound.CORRECT);
-						((GamePlay) game.getScreen()).updateTiles(10);
+						((GamePlay) game.getScreen()).updateTiles(100);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						((GamePlay) game.getScreen()).updateTiles(-5);
+						((GamePlay) game.getScreen()).updateTiles(-50);
 					}
 				}
 			}
@@ -175,10 +175,10 @@ public class GamePlay extends AbstractScreen {
 					if (isCorrect) {
 						game.getSoundManager().play(
 								WorldOfLearningSound.CORRECT);
-						((GamePlay) game.getScreen()).updateTiles(10);
+						((GamePlay) game.getScreen()).updateTiles(100);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						((GamePlay) game.getScreen()).updateTiles(-5);
+						((GamePlay) game.getScreen()).updateTiles(-50);
 					}
 				}
 			}
