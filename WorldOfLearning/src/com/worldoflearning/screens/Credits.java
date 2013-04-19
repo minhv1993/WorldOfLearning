@@ -19,13 +19,15 @@ import com.worldoflearning.services.SoundManager.WorldOfLearningSound;
 import com.worldoflearning.utils.DefaultActorListener;
 
 public class Credits extends AbstractScreen {
-	private static final String reallyLongString = "Art:\nOwl - CartoonBoy\nElephant, Seal - ClipArtLord\nFrog - Mathfix\n" +
+	private static final String reallyLongString = "Developers:\nJames Louie\nMinh Vo\nNick Reynoso\nJose Romo-Velazquez" +
+								"\n\nBackgrounds:\nSean Phan\nMinh Vo\n\n "+
+								"Art:\nOwl - CartoonBoy\nElephant, Seal - ClipArtLord\nFrog - Mathfix\n" +
 								"Dog, Mouse - OCAL\nCat - Ruthirsty\nTurtle, Hippo - WPClipArt\nFish - drunken_duck\n" +
-								"Numbers - horse50, OpenClipArt.org\n Facial expressions - kara 78,\n	frank jamieson,\n" +
-								"	thad pucket\n	hector gomex,\n	nemo,\n	rob,\n	ocal\n	andrea\n	(Openclipart.org)\n" +
-								"\n\n\nMusic:\n Menu, Levels, spalsh - Fillipo Vicarelli, PlayOnLoop.com\nMenu sound-blue2107, Freesound.org\n" +
-								"Confirmation cue - Bertref, Freesound.org\nRejection cue - Autistic Lucario, Freesound.org\n\n\n\n" +
-								"Backgrounds:\nSeanPhan";
+								"Numbers - horse50, OpenClipArt.org\n Facial expressions - kara 78,	frank jamieson, " +
+								"thad pucket,\n hector gomex, nemo, rob, ocal, andrea, (Openclipart.org)\n" +
+								"\n\nMusic:\n Menu, Levels, spalsh - Fillipo Vicarelli, PlayOnLoop.com\nMenu sound-blue2107, Freesound.org\n" +
+								"Confirmation cue - Bertref, Freesound.org\nRejection cue - Autistic Lucario, Freesound.org\n\n" +
+								"\nResources:\n LIBGDX\n GIMP\n Sumopaint.com\n Tyrian Open Source - Gustave Steigert" ;
 
 	public Credits(final WorldOfLearning game) {
 		super(game);
