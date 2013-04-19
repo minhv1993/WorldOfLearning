@@ -12,7 +12,7 @@ public class LevelManager
 {
     private final List<Level> levels;
     private final String[] w1l1= {"circle", "hexagon", "oval", "pentagon", "semi-circle", "square", "trapezoid", "triangle"};
-    private final String[] w1l2 = {"nine", "eight", "seven", "six", "five", "four", "three", "two", "one", "zero"};
+    private final String[] w1l2 = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
     private final String[] w1l3 = {"blue", "green", "orange", "purple", "red", "yellow"};
     private final String[] w1l4 = {"blue-five", "blue-four", "blue-hexagon", "blue-one", "blue-pentagon", "blue-triangle", "green-circle", "green-five",	
     								"green-four", "green-one", "green-square", "orange-circle", "orange-four", "orange-pentagon", "orange-two", "purple-hexagon", 
