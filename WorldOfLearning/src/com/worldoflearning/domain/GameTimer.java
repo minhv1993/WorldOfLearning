@@ -26,17 +26,15 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
  * simple timer used to countdown remaining time in the game
  */
 public class GameTimer implements EventListener {
-	
-	long timeStarted;
-	long timeToFinish;
+	private long timeToFinish;
+	private long countDownTime;
+	private boolean isPaused;
 	
 	public GameTimer(long countDownTime) {
 		// set initial time remaining
-		this.timeToFinish = System.currentTimeMillis() + countDownTime;
-	}
-
-	public void start() {
-		timeStarted = System.currentTimeMillis();
+		this.countDownTime = countDownTime;
+		this.timeToFinish = System.currentTimeMillis() + this.countDownTime;
+		this.isPaused = false;
 	}
 	
 	public void addTime(long timeToAdd) {
@@ -50,8 +48,19 @@ public class GameTimer implements EventListener {
 	public int getTimeRemainingInSeconds() {
 		return (int)((timeToFinish - System.currentTimeMillis()) / 1000);
 	}
-	public void pauseTime(long pTime) {
-		
+	
+	public void pause() {
+		if(!isPaused){
+			countDownTime = timeToFinish - System.currentTimeMillis();
+			isPaused = true;
+		}
+	}
+	
+	public void resume(){
+		if(isPaused){
+			timeToFinish = System.currentTimeMillis() + this.countDownTime;
+			isPaused = false;
+		}
 	}
 
 	@Override

@@ -62,7 +62,7 @@ public class Menu extends AbstractScreen {
                 game.setScreen( new Worlds( game ) );
             }
         } );
-        table.add( startGameButton ).fillX().size( 180, 50 ).spaceBottom( 10 ).padRight(10);
+        table.add( startGameButton ).fillX().size( 180, 90 ).spaceBottom( 10 ).padRight(10);
 
         // register the button "options"
         TextButton optionsButton = new TextButton( "Options", getSkin() );
@@ -80,7 +80,7 @@ public class Menu extends AbstractScreen {
                 game.setScreen( new Options( game ) );
             }
         } );
-        table.add( optionsButton ).fillX().size( 180, 50 ).spaceBottom( 10 ).padRight(10);
+        table.add( optionsButton ).fillX().size( 180, 90 ).spaceBottom( 10 ).padRight(10);
 
         // register the button "high scores"
         TextButton highScoresButton = new TextButton( "High Scores", getSkin() );
@@ -98,7 +98,7 @@ public class Menu extends AbstractScreen {
                 game.setScreen( new HighScores( game ) );
             }
         } );
-        table.add( highScoresButton ).fillX().size( 180, 50 ).spaceBottom( 10 ).padRight(10);
+        table.add( highScoresButton ).fillX().size( 180, 90 ).spaceBottom( 10 ).padRight(10);
         
         
         TextButton credits = new TextButton( "Credits", getSkin() );
@@ -116,6 +116,6 @@ public class Menu extends AbstractScreen {
                 game.setScreen( new Credits ( game ) );
             }
         } );
-        table.add( credits ).fillX().size( 180, 50 ).spaceBottom( 10 ).padRight(10);
+        table.add( credits ).fillX().size( 180, 90 ).spaceBottom( 10 ).padRight(10);
 	}
 }

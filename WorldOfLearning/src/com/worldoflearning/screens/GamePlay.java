@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -31,6 +34,7 @@ import com.worldoflearning.utils.DefaultActorListener;
 public class GamePlay extends AbstractScreen {
 	public static final int NUM_OF_TILES = 4;
 	public static final int TIME_IN_MILLIS = 31000;
+	public static final int SCORE_QUOTA = 1500;
 	
 	private int targetWorldId;
 	private int targetLevelId;
@@ -113,15 +117,15 @@ public class GamePlay extends AbstractScreen {
 		tile1.addListener(new DefaultActorListener(){
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-				boolean isCorrect = ((GamePlay) game.getScreen()).tile1.getName().equals(((GamePlay) game.getScreen()).toMatch.getName());
+				boolean isCorrect = tile1.getName().equals(toMatch.getName());
 				if (!isPaused) {
 					if (isCorrect) {
 						game.getSoundManager().play(
 								WorldOfLearningSound.CORRECT);
-						((GamePlay) game.getScreen()).updateTiles(100);
+						updateTiles(100);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						((GamePlay) game.getScreen()).updateTiles(-50);
+						updateTiles(-50);
 					}
 				}
 			}
@@ -132,15 +136,15 @@ public class GamePlay extends AbstractScreen {
 		tile2.addListener(new DefaultActorListener(){
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-				boolean isCorrect = ((GamePlay) game.getScreen()).tile2.getName().equals(((GamePlay) game.getScreen()).toMatch.getName());
+				boolean isCorrect = tile2.getName().equals(toMatch.getName());
 				if (!isPaused) {
 					if (isCorrect) {
 						game.getSoundManager().play(
 								WorldOfLearningSound.CORRECT);
-						((GamePlay) game.getScreen()).updateTiles(100);
+						updateTiles(100);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						((GamePlay) game.getScreen()).updateTiles(-50);
+						updateTiles(-50);
 					}
 				}
 			}
@@ -151,15 +155,15 @@ public class GamePlay extends AbstractScreen {
 		tile3.addListener(new DefaultActorListener(){
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-				boolean isCorrect = ((GamePlay) game.getScreen()).tile3.getName().equals(((GamePlay) game.getScreen()).toMatch.getName());
+				boolean isCorrect = tile3.getName().equals(toMatch.getName());
 				if (!isPaused) {
 					if (isCorrect) {
 						game.getSoundManager().play(
 								WorldOfLearningSound.CORRECT);
-						((GamePlay) game.getScreen()).updateTiles(100);
+						updateTiles(100);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						((GamePlay) game.getScreen()).updateTiles(-50);
+						updateTiles(-50);
 					}
 				}
 			}
@@ -170,15 +174,15 @@ public class GamePlay extends AbstractScreen {
 		tile4.addListener(new DefaultActorListener(){
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-				boolean isCorrect = ((GamePlay) game.getScreen()).tile4.getName().equals(((GamePlay) game.getScreen()).toMatch.getName());
+				boolean isCorrect = tile4.getName().equals(toMatch.getName());
 				if (!isPaused) {
 					if (isCorrect) {
 						game.getSoundManager().play(
 								WorldOfLearningSound.CORRECT);
-						((GamePlay) game.getScreen()).updateTiles(100);
+						updateTiles(100);
 					} else {
 						game.getSoundManager().play(WorldOfLearningSound.WRONG);
-						((GamePlay) game.getScreen()).updateTiles(-50);
+						updateTiles(-50);
 					}
 				}
 			}
@@ -186,33 +190,33 @@ public class GamePlay extends AbstractScreen {
 	}
 	
 	public void updateTiles(int score){
-		((GamePlay) game.getScreen()).scores += score;
+		scores += score;
 		if(score > 0){
 			for(int i = 0; i < GamePlay.NUM_OF_TILES; i++){
-				Item temp = ((GamePlay) game.getScreen()).levelItems.get(((GamePlay) game.getScreen()).rand.nextInt(((GamePlay) game.getScreen()).levelItems.size()));
-				((GamePlay) game.getScreen()).itemTiles[i] = temp;
+				Item temp = levelItems.get(rand.nextInt(levelItems.size()));
+				itemTiles[i] = temp;
 			}
-			Item itemTile = ((GamePlay) game.getScreen()).itemTiles[0];
-			((GamePlay) game.getScreen()).tile1 = new ImageButton(new TextureRegionDrawable(((GamePlay) game.getScreen()).getAtlas().findRegion(itemTile.getDirectory())));
-			((GamePlay) game.getScreen()).tile1.setName(itemTile.getName());
+			Item itemTile = itemTiles[0];
+			tile1 = new ImageButton(new TextureRegionDrawable(getAtlas().findRegion(itemTile.getDirectory())));
+			tile1.setName(itemTile.getName());
 			addTile1Listener();
-			itemTile = ((GamePlay) game.getScreen()).itemTiles[1];
-			((GamePlay) game.getScreen()).tile2 = new ImageButton(new TextureRegionDrawable(((GamePlay) game.getScreen()).getAtlas().findRegion(itemTile.getDirectory())));
-			((GamePlay) game.getScreen()).tile2.setName(itemTile.getName());
+			itemTile = itemTiles[1];
+			tile2 = new ImageButton(new TextureRegionDrawable(getAtlas().findRegion(itemTile.getDirectory())));
+			tile2.setName(itemTile.getName());
 			addTile2Listener();
-			itemTile = ((GamePlay) game.getScreen()).itemTiles[2];
-			((GamePlay) game.getScreen()).tile3 = new ImageButton(new TextureRegionDrawable(((GamePlay) game.getScreen()).getAtlas().findRegion(itemTile.getDirectory())));
-			((GamePlay) game.getScreen()).tile3.setName(itemTile.getName());
+			itemTile = itemTiles[2];
+			tile3 = new ImageButton(new TextureRegionDrawable(getAtlas().findRegion(itemTile.getDirectory())));
+			tile3.setName(itemTile.getName());
 			addTile3Listener();
-			itemTile = ((GamePlay) game.getScreen()).itemTiles[3];
-			((GamePlay) game.getScreen()).tile4 = new ImageButton(new TextureRegionDrawable(((GamePlay) game.getScreen()).getAtlas().findRegion(itemTile.getDirectory())));
-			((GamePlay) game.getScreen()).tile4.setName(itemTile.getName());
+			itemTile = itemTiles[3];
+			tile4 = new ImageButton(new TextureRegionDrawable(getAtlas().findRegion(itemTile.getDirectory())));
+			tile4.setName(itemTile.getName());
 			addTile4Listener();
-			itemTile = ((GamePlay) game.getScreen()).itemTiles[((GamePlay) game.getScreen()).rand.nextInt(GamePlay.NUM_OF_TILES)];
-			((GamePlay) game.getScreen()).toMatch = new ImageButton(new TextureRegionDrawable(((GamePlay) game.getScreen()).getAtlas().findRegion(itemTile.getDirectory())));
-			((GamePlay) game.getScreen()).toMatch.setName(itemTile.getName());
+			itemTile = itemTiles[rand.nextInt(GamePlay.NUM_OF_TILES)];
+			toMatch = new ImageButton(new TextureRegionDrawable(getAtlas().findRegion(itemTile.getDirectory())));
+			toMatch.setName(itemTile.getName());
 		}
-		((GamePlay) game.getScreen()).show();
+		show();
 	}
 	
 	public void setUpTiles(){
@@ -244,80 +248,90 @@ public class GamePlay extends AbstractScreen {
 		Table table = super.getTable();
 		table.clear();
 		if(!isPaused) {
-			if(timer.getTimeRemainingInSeconds() > 0){
-				table.columnDefaults(0).padLeft(5);
-				table.columnDefaults(6).padRight(5);
-				for(int y = 0; y < 3; y++){
-					table.row();
-					for(int x = 0; x < 4; x++){
-						if(x == 0){
-							if(y == 0){
-
-								table.add("Time: " + timer.getTimeRemainingInSeconds()).fillX().colspan(2);
-								table.add("W "+(targetWorldId+1)+" - Lvl "+(targetLevelId+1)).fillX();
-								table.add("Score: "+scores).fillX();
-							} else if (y == 1){
-								table.add(toMatch).fillX().size(100,100).colspan(2).padRight(20);
-							} else {
-								Table smallTable = new Table(getSkin());
-								smallTable.columnDefaults(0).padRight(5);
-								smallTable.columnDefaults(1).padRight(5);
-								smallTable.row();
-
-								smallTable.add(toMatch.getName()).fillX().center().padBottom(30);
-								smallTable.row();
-								final TextButton pauseButton = new TextButton( "Pause" , getSkin() );
-								pauseButton.addListener( new DefaultActorListener() {
-									@Override
-									public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
-										super.touchUp( event, x, y, pointer, button );
-										game.getSoundManager().play( WorldOfLearningSound.CLICK );
-										//game.setScreen( new Menu( game ) );
-
-										/* Pause Timer
-										 * Set isPaused() state
-										 * take in the current system time
-										 * when paused is pushed again, give the time that has elapsed 
-										 * and add it to the finish timer.
-										 */
-										if (!isPaused) {
-											isPaused = true;
-										}
-										else {
-											isPaused = false;
-											pause();
-										}  
-									}
-								} );
-
-								smallTable.add(pauseButton).fillX();
-								table.add(smallTable).fillX().colspan(2).padRight(20);
-							}
-						}else if (x >1){
-							if(y > 0){
-								if(y == 1){
-									if(x == 2){
-										table.add(tile1).fillX().size(100, 100).space(2);
-									}else {
-										table.add(tile2).fillX().size(100, 100).space(2);
-									}
-								} else if (y == 2){
-									if(x == 2){
-										table.add(tile3).fillX().size(100, 100).space(2);
-									}else {
-										table.add(tile4).fillX().size(100, 100).space(2);
-									}
-								}
-							}
-						}
+			if(timer.getTimeRemainingInSeconds() > 0){	
+				table.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("skin/game-table-bg.png")))));
+				
+				Table leftTable = new Table(getSkin());
+				leftTable.add("W "+(targetWorldId+1)+" - Lvl "+(targetLevelId+1)).spaceBottom(5);
+				leftTable.row();
+				leftTable.add("Time: " + timer.getTimeRemainingInSeconds()).spaceBottom(5);
+				leftTable.row();
+				leftTable.add("Score: " + scores).spaceBottom(7);
+				leftTable.row();
+				leftTable.add(toMatch).size(80,80);
+				leftTable.row();
+				leftTable.add(toMatch.getName()).spaceBottom(10);
+				leftTable.row();
+				final TextButton pauseButton = new TextButton( "Pause" , getSkin() );
+				pauseButton.addListener( new DefaultActorListener() {
+					@Override
+					public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
+						super.touchUp( event, x, y, pointer, button );
+						game.getSoundManager().play( WorldOfLearningSound.CLICK );
+						if (!isPaused) {
+							isPaused = true;
+							timer.pause();
+						} 
 					}
-				}
+				});
+				leftTable.add(pauseButton).size(80,20);
+				table.add(leftTable).fillX().pad(6).padLeft(20);
+				
+				Table rightTable = new Table(getSkin());
+				rightTable.add(tile1).fillX().size(110, 110).space(7);
+				rightTable.add(tile2).fillX().size(110, 110).space(7);
+				rightTable.row();
+				rightTable.add(tile3).fillX().size(110, 110).space(7);
+				rightTable.add(tile4).fillX().size(110, 110).space(7);
+				table.add(rightTable).fillX().pad(6).padLeft(40);
+				table.row();
+			}else if(scores < SCORE_QUOTA){
+				table.columnDefaults(0).padRight(5);
+				table.columnDefaults(1).padLeft(5);
+				table.setBackground(splashDrawable);
+				table.row();
+
+				table.add("Level Incomplete").colspan(2).padBottom(10);
+				table.row();
+
+				table.add("Required Score:").fillX().left();
+				table.add(Integer.toString(SCORE_QUOTA)).fillX().right();
+				table.row();
+
+				table.add("Your Score:").fillX().left();
+				table.add(Integer.toString(scores)).fillX().right();
+				table.row();
+				
+				TextButton levelsButton = new TextButton( "Levels Select", getSkin() );
+				levelsButton.addListener(new DefaultActorListener(){
+					@Override
+					public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
+						super.touchUp( event, x, y, pointer, button );
+						game.getSoundManager().play( WorldOfLearningSound.CLICK );
+						game.setScreen(new Levels(game, targetWorldId));
+						
+					}
+				});
+				TextButton replayButton = new TextButton("Replay", getSkin());
+				replayButton.addListener(new DefaultActorListener(){
+					@Override
+					public void touchUp(InputEvent event, float x, float y, int pointer, int button ){
+						super.touchUp( event, x, y, pointer, button );
+						game.getSoundManager().play( WorldOfLearningSound.CLICK );
+						game.setScreen(new GamePlay(game, targetWorldId, targetLevelId));
+						
+					}
+				});
+				table.add(levelsButton).fillX().size(150, 40).padTop(5);
+				table.add(replayButton).fillX().size(150, 40).padTop(5);
+				table.row();
 			}else{
 				final int nextLevel = (targetLevelId==3)?((targetWorldId==1)?3:0):(targetLevelId+1);
 				final int nextWorld = (targetWorldId==1)?1:((targetLevelId==3)?1:0);
 				
 				table.columnDefaults(0).padRight(5);
 				table.columnDefaults(1).padLeft(5);
+				table.setBackground(splashDrawable);
 				table.row();
 
 				table.add("Level Completed").colspan(2).padBottom(10);
@@ -356,13 +370,14 @@ public class GamePlay extends AbstractScreen {
 						
 					}
 				});
-				table.add(levelsButton).fillX().size(100, 20).padTop(5);
-				table.add(nextButton).fillX().size(100, 20).padTop(5);
+				table.add(levelsButton).fillX().size(150, 40).padTop(5);
+				table.add(nextButton).fillX().size(150, 40).padTop(5);
 				table.row();
 			}
 		}else{
 			table.columnDefaults(0).padRight(20);
 			table.add("Paused").colspan(3);
+			table.setBackground(splashDrawable);
 			
 			// create the labels widgets
 	        final CheckBox soundEffectsCheckbox = new CheckBox( "", getSkin() );
@@ -415,7 +430,7 @@ public class GamePlay extends AbstractScreen {
 	                game.getPreferencesManager().setVolume( value );
 	                game.getMusicManager().setVolume( value );
 	                game.getSoundManager().setVolume( value );
-	                ((GamePlay) game.getScreen()).updateVolumeLabel();
+	                updateVolumeLabel();
 	            }
 	        } );
 
@@ -436,14 +451,15 @@ public class GamePlay extends AbstractScreen {
 	            public void touchUp(InputEvent event, float x, float y, int pointer, int button ) {
 	                super.touchUp( event, x, y, pointer, button );
 	                game.getSoundManager().play( WorldOfLearningSound.CLICK );
-	                ((GamePlay) game.getScreen()).isPaused = false;
-	                ((GamePlay) game.getScreen()).show();
+	                isPaused = false;
+	                timer.resume();
+	                show();
 	            }
 	        } );
 	        table.row();
-	        table.add( backButton ).size( 150, 30 ).fillX().padTop(30);
+	        table.add( backButton ).size( 150, 40 ).fillX().padTop(30);
 	        
-	        TextButton menuButton = new TextButton( "Return to Level Select", getSkin() );
+	        TextButton menuButton = new TextButton( "Level Select", getSkin() );
 	        menuButton.addListener( new DefaultActorListener() {
 	            @Override
 	            public void touchUp(InputEvent event, float x, float y, int pointer, int button ) {
@@ -452,7 +468,7 @@ public class GamePlay extends AbstractScreen {
 	                game.setScreen( new Levels( game , targetWorldId ) );
 	            }
 	        } );
-	        table.add( menuButton ).size( 180, 30 ).fillX().padTop(30);
+	        table.add( menuButton ).size( 150, 40 ).fillX().padTop(30);
 	        table.row();
 		}
 		stage.addActor(table);

@@ -39,8 +39,6 @@ public class Tutorial extends AbstractScreen {
 		counter = 0;
 	}
 
-
-
 	@Override
 	public void show(){
 		super.show();
@@ -55,7 +53,7 @@ public class Tutorial extends AbstractScreen {
 		table = super.getTable();
 		table.columnDefaults(0).padRight(10);
 		table.columnDefaults(1).padLeft(10);
-		table.add( " " ).spaceBottom( 300 );
+		table.add("World " + (targetWorldId+1) + " - Level " + (targetLevelId+1) + " Tutorial").colspan(2).padBottom(20);
 		table.row();
 
 		TextButton yesButton = new TextButton( "Teach Me!", getSkin() );
@@ -72,7 +70,6 @@ public class Tutorial extends AbstractScreen {
 				game.getSoundManager().play( WorldOfLearningSound.CLICK );
 				table.clear();
 				table = setTutorial(table, counter);
-
 			}
 		} );
 		table.add( yesButton ).fillX().size( 200, 60 ).spaceBottom( 10 ).padRight(10);
